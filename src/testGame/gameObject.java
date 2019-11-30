@@ -9,7 +9,7 @@ public class gameObject {
 	keyStep keyListen;
 	int x;
 	int y;
-	int ysize;;
+	int ysize;
 	int xsize; // this is used for hitboxes
 	
 
@@ -46,6 +46,7 @@ public class gameObject {
 
 		// casting graphics to graphics2d to use graphics2d
 
+
 		g2d.setColor(Color.BLACK);
 		g2d.drawRect(x, y, xsize, ysize);
 
@@ -54,13 +55,19 @@ public class gameObject {
 	}
 	
 	public static boolean checkCollision(gameObject obj1, gameObject obj2) {// check if object2 and object1 collide at
-																			// any point.
-		if(obj1.x < obj2.x ) {
-			return true;
+		boolean xCol = false;																	// any point.
+		boolean yCol = false;
+
+		if (obj1.x > obj2.x && obj1.x < obj2.x + obj2.xsize) {xCol = true;} 
+		if (obj1.x + obj1.xsize > obj2.x && obj1.x < obj2.x) {xCol = true;}
+
+		if (obj1.y > obj2.y && obj1.y < obj2.y + obj2.ysize) {yCol = true;}
+		if (obj1.y + obj1.ysize > obj2.y && obj1.y < obj2.y) {yCol = true;}
+
+		if(xCol && yCol) {
+		return true;
 		}
-		else {
-			return false;
-		}
+		return false;
 	}
 }
 

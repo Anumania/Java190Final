@@ -9,7 +9,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
@@ -31,6 +35,8 @@ public class gameGame extends JFrame implements ActionListener {
 	int stepListLength = 0;
 	gameObject bronky;
 	gameObject testobj;
+	BufferedImage offImage2;
+
 
 	// keyStep keyInput = new keyStep();
 	public static void main(String[] args) {
@@ -41,6 +47,21 @@ public class gameGame extends JFrame implements ActionListener {
 
 	public gameGame() {
 		super("test game"); // this is the game title also this has to be first
+
+		File rootName = new File("./sprites/test.jpg");
+
+		try {
+			System.out.println(rootName.getCanonicalPath());
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			offImage2 = ImageIO.read(rootName);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		// setIgnoreRepaint(true);
 		x = 0.0;
 		wait = 10;
@@ -92,12 +113,15 @@ public class gameGame extends JFrame implements ActionListener {
 			gameObject testobj = new gameObject(this, keyListen);
 		}
 		if (keyListen.getKeyPressed(KeyEvent.VK_F2)) {
-			gameObject bronky = new gameObject(this, keyListen);
+			gameObject bronky = new TemplateObject(this, keyListen);
 		}
 		if (keyListen.getKey(KeyEvent.VK_F3)) {
-			// if (gameObject.checkCollision(bronky, testobj)) {
-				Player player = new Player(this, keyListen);
-			// }
+
+			if (gameObject.checkCollision(stepList[0], stepList[1])) {
+				// System.out.println("hell");
+				//Player player = new Player(this, keyListen);
+			}
+
 		}
 		if (y + 200 >= yDimension && jumpVel > 0) {
 			jumpVel = 0;
@@ -122,12 +146,15 @@ public class gameGame extends JFrame implements ActionListener {
 		if (stepListLength != 0) {
 
 			for (int i = 0; i < stepListLength - 1; i++) {
+
 				stepList[i].paint(g2d);
+
 
 			}
 
 		}
 
+		g2d.drawImage(offImage2, (int) x, (int) y, this);
 		// repaint(); // this line makes it paint many times :))) very good
 		g.drawImage(offImage, 0, 0, this); // draw the seperate canvas onto the screen, removing flickering.
 		// http://journals.ecs.soton.ac.uk/java/tutorial/ui/drawing/doubleBuffer.html
@@ -156,8 +183,6 @@ public class gameGame extends JFrame implements ActionListener {
 		// this forces the computer to draw a frame that is complete instead of a
 		// possibly incomplete one.
 
-		wait--;
-		wait = Math.max(wait, 2);
 		timer.setDelay(16); // this is roughly 60 fps
 
 
@@ -168,6 +193,21 @@ public class gameGame extends JFrame implements ActionListener {
 		stepList[stepListLength] = l;
 		stepListLength++;
 
+	}
+
+	public void importFiles() {
+		BufferedImage test;
+		File rootName = new File("./sprites.jpg");
+		try {
+			test = ImageIO.read(rootName);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		/*
+		 * File name = new File("./");
+		 */
 	}
 
 }
