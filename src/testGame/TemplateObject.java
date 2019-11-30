@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class TemplateObject extends gameObject {
-	public TemplateObject(gameGame mainGame, keyStep _keyListen) {
-		super(mainGame, _keyListen);
+	public TemplateObject() {
+		super();
 	}
 
 	public void step() {

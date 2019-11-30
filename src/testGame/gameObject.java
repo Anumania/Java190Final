@@ -3,6 +3,10 @@ package testGame;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class gameObject {
 	gameGame main;
@@ -13,15 +17,27 @@ public class gameObject {
 	int xsize; // this is used for hitboxes
 	
 
-	public gameObject(gameGame mainGame, keyStep _keyListen) {
+	public gameObject() {
 		x = 200;
 		y = 200;
 		ysize = 20;
 		xsize = 20;
-		keyListen = _keyListen;
-		main = mainGame;
-		main.steps(this);
+		keyListen = gameGame.keyListen;
+		main = gameGame.mainGame;
+		main.steps(this); //place this object into the steps list, which is a list of every object in the game
+		
+		
 
+	}
+	public gameObject(int _x, int _y) {
+		x = _x;
+		y = _x;
+		ysize = 20;
+		xsize = 20;
+		keyListen = gameGame.keyListen;
+		main = gameGame.mainGame;
+		main.steps(this); //place this object into the steps list, which is a list of every object in the game
+	
 	}
 
 
@@ -46,7 +62,7 @@ public class gameObject {
 
 		// casting graphics to graphics2d to use graphics2d
 
-
+		
 		g2d.setColor(Color.BLACK);
 		g2d.drawRect(x, y, xsize, ysize);
 
@@ -69,6 +85,20 @@ public class gameObject {
 		}
 		return false;
 	}
+	public static boolean checkCollision(int targx, int targy,gameObject obj) { //check if you want a specific point if collisioned 
+		boolean xCol = false;																	
+		boolean yCol = false;
+
+		if (targx > obj.x && targx < obj.x + obj.xsize) {xCol = true;}
+		if (targy > obj.y && targy < obj.y + obj.ysize) {yCol = true;}
+
+
+		if(xCol && yCol) {
+		return true;
+		}
+		return false;
+	
+	}	
 }
 
 	

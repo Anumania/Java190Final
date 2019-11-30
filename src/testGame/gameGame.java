@@ -30,12 +30,14 @@ public class gameGame extends JFrame implements ActionListener {
 	Image offImage;
 	int xDimension = 800;
 	int yDimension = 600;
-	keyStep keyListen;
-	gameObject stepList[] = new gameObject[200];
-	int stepListLength = 0;
+	static keyStep keyListen; //all of these statics can and should be accessed by objects in order for the game to work correctly
+	static gameObject stepList[] = new gameObject[200];
+	static int stepListLength = 0;
+	static gameGame mainGame; 
 	gameObject bronky;
 	gameObject testobj;
-	BufferedImage offImage2;
+	
+	
 
 
 	// keyStep keyInput = new keyStep();
@@ -47,7 +49,7 @@ public class gameGame extends JFrame implements ActionListener {
 
 	public gameGame() {
 		super("test game"); // this is the game title also this has to be first
-
+		mainGame = this;
 		File rootName = new File("./sprites/test.jpg");
 
 		try {
@@ -55,12 +57,7 @@ public class gameGame extends JFrame implements ActionListener {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		try {
-			offImage2 = ImageIO.read(rootName);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 
 		// setIgnoreRepaint(true);
 		x = 0.0;
@@ -80,56 +77,14 @@ public class gameGame extends JFrame implements ActionListener {
 				System.exit(0);
 			}
 		});
-
+		new Player();
 		timer = new Timer(wait, this); // this is what requires the need to implement actionlistener
 		timer.start();
 
 	}
 
-	public void step() { // use keyListen.getKey(KeyEvent.(your key here(usually starts with VK_))
-							// followed by whatever you want to happen
-		// for (gameObject i : stepList) {
-
-		if (stepListLength != 0) {
-
-			for (int i = 0; i < stepListLength - 1; i++) {
-				stepList[i].step();
-
-			}
-
-		}
-
-		if (keyListen.getKeyPressed(KeyEvent.VK_UP)) { // use this, other option sucks more
-			jumpVel -= 10;
-		}
-		if (keyListen.getKey(KeyEvent.VK_LEFT)) { // use this, other option sucks more
-			x -= 3;
-		}
-		if (keyListen.getKey(KeyEvent.VK_RIGHT)) { // use this, other option sucks more
-			x += 3;
-			// System.out.print(keyListen.keyDownLength(KeyEvent.VK_RIGHT));
-		}
-		if (keyListen.getKeyPressed(KeyEvent.VK_F1)) {
-			gameObject testobj = new gameObject(this, keyListen);
-		}
-		if (keyListen.getKeyPressed(KeyEvent.VK_F2)) {
-			gameObject bronky = new TemplateObject(this, keyListen);
-		}
-		if (keyListen.getKey(KeyEvent.VK_F3)) {
-
-			if (gameObject.checkCollision(stepList[0], stepList[1])) {
-				// System.out.println("hell");
-				//Player player = new Player(this, keyListen);
-			}
-
-		}
-		if (y + 200 >= yDimension && jumpVel > 0) {
-			jumpVel = 0;
-			y = yDimension - 200;
-		} else {
-			jumpVel += 1;
-		}
-		y += jumpVel;
+	public void step() { 
+		if (stepListLength != 0){ for (int i = 0; i < stepListLength; i++) {stepList[i].step();}}
 	}
 
 
@@ -144,19 +99,15 @@ public class gameGame extends JFrame implements ActionListener {
 		g2d.fillRect(0, 0, xDimension, yDimension); // wipe the previous screen
 
 		if (stepListLength != 0) {
-
-			for (int i = 0; i < stepListLength - 1; i++) {
-
+			for (int i = 0; i < stepListLength; i++) {
 				stepList[i].paint(g2d);
-
-
 			}
-
 		}
-
-		g2d.drawImage(offImage2, (int) x, (int) y, this);
+		
+		//g2d.drawImage(offImage, (int) x, (int) y, this);
 		// repaint(); // this line makes it paint many times :))) very good
-		g.drawImage(offImage, 0, 0, this); // draw the seperate canvas onto the screen, removing flickering.
+		 // draw the seperate canvas onto the screen, removing flickering.
+		
 		// http://journals.ecs.soton.ac.uk/java/tutorial/ui/drawing/doubleBuffer.html
 		// thanks
 	}
@@ -189,7 +140,7 @@ public class gameGame extends JFrame implements ActionListener {
 	}
 
 	public void steps(gameObject l) {
-
+		System.out.println("lol");
 		stepList[stepListLength] = l;
 		stepListLength++;
 
