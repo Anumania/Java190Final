@@ -50,6 +50,10 @@ public class Player extends gameObject {
 		if (keyListen.getKey(KeyEvent.VK_UP)) {
 			y--;
 		}
+		if (keyListen.getKeyPressed(KeyEvent.VK_F1)) {
+
+			new Editor();
+		}
 	}
 
 	public void paint(Graphics2D g2d) {

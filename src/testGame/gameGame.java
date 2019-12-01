@@ -39,6 +39,7 @@ public class gameGame extends JFrame implements ActionListener {
 	gameObject bronky;
 	gameObject testobj;
 	boolean debug = false;
+	boolean speedTest = false;
 	
 	
 
@@ -114,7 +115,7 @@ public class gameGame extends JFrame implements ActionListener {
 
 
 	public void paint(Graphics g) { // the graphics object originates here, cant make your own, also this is called
-
+		
 		// automagically :)
 		offImage = createImage(xDimension, yDimension);
 		offGraphics = offImage.getGraphics();
@@ -131,7 +132,13 @@ public class gameGame extends JFrame implements ActionListener {
 				stepList[i].x+= gameGame.camX; stepList[i].y+= gameGame.camY;
 			}
 		}
-
+		
+		if (stepListLength != 0) {
+			for (int i = 0; i < stepListLength; i++) { //camera movement
+				// TODO dont draw things outside of the screen border
+				stepList[i].paintGUI(g2d);
+			}
+		}
 		g.drawImage(offImage, (int) x, (int) y, this);
 		// repaint(); // this line makes it paint many times :))) very good
 		 // draw the seperate canvas onto the screen, removing flickering.
@@ -149,9 +156,10 @@ public class gameGame extends JFrame implements ActionListener {
 
 		bruh++;
 		if (skruh >= 1000) {
-			System.out.println(bruh);
+			System.out.println("fps: " + bruh);
 			bruh = 0;
 			skruh = 0;
+			
 		}
 		// keyListen.
 		step();
@@ -162,8 +170,14 @@ public class gameGame extends JFrame implements ActionListener {
 		// this forces the computer to draw a frame that is complete instead of a
 		// possibly incomplete one.
 
-		timer.setDelay(16); // this is roughly 60 fps
-
+		 // this is roughly 60 fps
+		if(speedTest) {
+			timer.setDelay(0);
+		}
+		else { 
+			timer.setDelay(16);
+		}
+		
 
 	}
 
@@ -179,6 +193,15 @@ public class gameGame extends JFrame implements ActionListener {
 		stepList[k] = l;
 		stepListLength++;
 
+	}
+	public void changeDepth(gameObject l, int k) {
+		for(int i = 0;i != stepList.length;i++) {
+			if(stepList[i].equals(l)) {
+				stepList[i] = null;
+				break;
+			}
+		}
+		
 	}
 
 	public void importFiles() {

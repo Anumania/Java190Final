@@ -74,6 +74,10 @@ public class gameObject {
 		// x += 0.01;
 
 	}
+	public void paintGUI(Graphics2D g2d) {
+		
+		
+	}
 	
 	public static boolean checkCollision(gameObject obj1, gameObject obj2) {// check if object2 and object1 collide at
 		boolean xCol = false;																	// any point.
