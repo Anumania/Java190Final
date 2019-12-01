@@ -9,12 +9,15 @@ public class Editor extends gameObject {
 	}
 
 	public void step() {
+		
 	}
-
+	public String getName() {
+		return "Editor";	
+	}
 	public void paint(Graphics2D g2d) {
-
-		g2d.setColor(Color.BLUE);
-		g2d.drawRect(x, y, xsize, ysize);
+		//g2d.setColor(Color.BLUE);
+		//g2d.drawRect(x, y, xsize, ysize);
+		
 
 	}
 
