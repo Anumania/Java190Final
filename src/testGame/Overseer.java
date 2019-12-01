@@ -10,7 +10,9 @@ public class Overseer extends gameObject {
 
 	public void step() {
 	}
-
+	public String getName() {
+		return "gameObject";	
+	}
 	public void paint(Graphics2D g2d) {
 
 		g2d.setColor(Color.BLUE);

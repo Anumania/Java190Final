@@ -10,7 +10,9 @@ public class TemplateObject extends gameObject {
 
 	public void step() {
 	}
-
+	public String getName() {
+		return "TemplateObject";	
+	}
 	public void paint(Graphics2D g2d) {
 
 		g2d.setColor(Color.BLUE);

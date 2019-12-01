@@ -40,7 +40,10 @@ public class gameObject {
 	
 	}
 
-
+	public String getName() {
+		return "gameObject";	
+	}
+	
 	public void step() {
 		if (keyListen.getKey(KeyEvent.VK_LEFT)) {
 			x--;

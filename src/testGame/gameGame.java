@@ -31,7 +31,7 @@ public class gameGame extends JFrame implements ActionListener {
 	int xDimension = 800;
 	int yDimension = 600;
 	static keyStep keyListen; //all of these statics can and should be accessed by objects in order for the game to work correctly
-	static gameObject stepList[] = new gameObject[200];
+	static gameObject stepList[] = new gameObject[20000]; //use this like depth yeah?
 	static int stepListLength = 0;
 	static gameGame mainGame; 
 	static int camX;
@@ -70,7 +70,7 @@ public class gameGame extends JFrame implements ActionListener {
 		setSize(xDimension, yDimension); // this is the window size
 
 		setVisible(true); // this makes the window show
-
+		
 		// these lines is wizardry and i do not expect to know how it works yet
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -86,18 +86,26 @@ public class gameGame extends JFrame implements ActionListener {
 	}
 
 	public void step() { 
-		if (keyListen.getKey(KeyEvent.VK_A)) {
-			camX-=5;
+		if(false) {
+			for(int i = 0; i < stepList.length;i++) {	
+				if(i != 0) {
+				
+				}
+			}
 		}
-		if (keyListen.getKey(KeyEvent.VK_D)) {
-			camX+=5;
-		}
-		if (keyListen.getKey(KeyEvent.VK_S)) {
-			camY+=5;
-		}
-		if (keyListen.getKey(KeyEvent.VK_W)) {
-			camY-=5;
-		}
+			
+//		if (keyListen.getKey(KeyEvent.VK_A)) {
+//			camX-=5;
+//		}
+//		if (keyListen.getKey(KeyEvent.VK_D)) {
+//			camX+=5;
+//		}
+//		if (keyListen.getKey(KeyEvent.VK_S)) {
+//			camY+=5;
+//		}
+//		if (keyListen.getKey(KeyEvent.VK_W)) {
+//			camY-=5;
+//		}
 		
 		if (stepListLength != 0){ for (int i = 0; i < stepListLength; i++) {stepList[i].step();}}
 	}
@@ -158,8 +166,14 @@ public class gameGame extends JFrame implements ActionListener {
 	}
 
 	public void steps(gameObject l) {
-		System.out.println("lol");
 		stepList[stepListLength] = l;
+		stepListLength++;
+
+	}
+	public void steps(gameObject l,int k) {
+		System.out.println("created " + l.getName());
+		
+		stepList[k] = l;
 		stepListLength++;
 
 	}

@@ -23,9 +23,12 @@ public class Player extends gameObject {
 		super(_x,_y);
 		create();
 	}
+	public String getName() {
+		return "Player";	
+	}
 	
 	public void create() {
-		File rootName = new File("./sprites/test.jpg");
+		File rootName = new File("./sprites/Dinklet/Dinklet1.png");
 		try {
 			sprite = ImageIO.read(rootName);
 		} catch (IOException e) {
