@@ -11,7 +11,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Player extends gameObject {
-	BufferedImage offImage2;
+	BufferedImage sprite;
 	
 	
 
@@ -25,9 +25,9 @@ public class Player extends gameObject {
 	}
 	
 	public void create() {
-		
+		File rootName = new File("./sprites/test.jpg");
 		try {
-			offImage2 = ImageIO.read(new File("./sprites/test.jpg"));
+			sprite = ImageIO.read(rootName);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -50,9 +50,9 @@ public class Player extends gameObject {
 	}
 
 	public void paint(Graphics2D g2d) {
-		g2d.setColor(Color.BLUE);
-		//g2d.drawImage(offImage2, (int) x, (int) y, main);
-		g2d.drawRect(x, y, xsize, ysize);
+		//g2d.setColor(Color.BLUE);
+		g2d.drawImage(sprite, (int) x, (int) y, main);
+		//g2d.drawRect(x, y, xsize, ysize);
 
 	}
 

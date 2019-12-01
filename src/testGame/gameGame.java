@@ -34,6 +34,8 @@ public class gameGame extends JFrame implements ActionListener {
 	static gameObject stepList[] = new gameObject[200];
 	static int stepListLength = 0;
 	static gameGame mainGame; 
+	static int camX;
+	static int camY;
 	gameObject bronky;
 	gameObject testobj;
 	
@@ -84,6 +86,19 @@ public class gameGame extends JFrame implements ActionListener {
 	}
 
 	public void step() { 
+		if (keyListen.getKey(KeyEvent.VK_A)) {
+			camX-=5;
+		}
+		if (keyListen.getKey(KeyEvent.VK_D)) {
+			camX+=5;
+		}
+		if (keyListen.getKey(KeyEvent.VK_S)) {
+			camY+=5;
+		}
+		if (keyListen.getKey(KeyEvent.VK_W)) {
+			camY-=5;
+		}
+		
 		if (stepListLength != 0){ for (int i = 0; i < stepListLength; i++) {stepList[i].step();}}
 	}
 
@@ -93,18 +108,21 @@ public class gameGame extends JFrame implements ActionListener {
 		// automagically :)
 		offImage = createImage(xDimension, yDimension);
 		offGraphics = offImage.getGraphics();
-
+		
 		Graphics2D g2d = (Graphics2D) offGraphics; // draw everything onto a seperate canvas
 		g2d.setColor(Color.white);
 		g2d.fillRect(0, 0, xDimension, yDimension); // wipe the previous screen
 
 		if (stepListLength != 0) {
 			for (int i = 0; i < stepListLength; i++) {
+				stepList[i].x-= gameGame.camX; stepList[i].y-= gameGame.camY; //camera movement
+				// TODO dont draw things outside of the screen border
 				stepList[i].paint(g2d);
+				stepList[i].x+= gameGame.camX; stepList[i].y+= gameGame.camY;
 			}
 		}
-		
-		//g2d.drawImage(offImage, (int) x, (int) y, this);
+
+		g.drawImage(offImage, (int) x, (int) y, this);
 		// repaint(); // this line makes it paint many times :))) very good
 		 // draw the seperate canvas onto the screen, removing flickering.
 		
