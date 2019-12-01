@@ -7,6 +7,10 @@ public class Overseer extends gameObject {
 	public Overseer() {
 		super();
 	}
+	public Overseer(int hruhx, int hruhy) {
+		super(hruhx,hruhy);
+	}
+	
 
 	public void step() {
 	}

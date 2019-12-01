@@ -38,6 +38,7 @@ public class gameGame extends JFrame implements ActionListener {
 	static int camY;
 	gameObject bronky;
 	gameObject testobj;
+	boolean debug = false;
 	
 	
 
@@ -86,12 +87,13 @@ public class gameGame extends JFrame implements ActionListener {
 	}
 
 	public void step() { 
-		if(false) {
+		if(debug) {
 			for(int i = 0; i < stepList.length;i++) {	
-				if(i != 0) {
-				
+				if(stepList[i] != null) {
+					System.out.print(i + " " +stepList[i].getName() + " ");
 				}
 			}
+			System.out.println();
 		}
 			
 //		if (keyListen.getKey(KeyEvent.VK_A)) {
@@ -171,8 +173,9 @@ public class gameGame extends JFrame implements ActionListener {
 
 	}
 	public void steps(gameObject l,int k) {
-		System.out.println("created " + l.getName());
-		
+		if(stepList[k] != null) {
+			System.out.println("created " + l.getName());
+		}
 		stepList[k] = l;
 		stepListLength++;
 

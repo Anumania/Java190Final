@@ -15,6 +15,7 @@ public class gameObject {
 	int y;
 	int ysize;
 	int xsize; // this is used for hitboxes
+	boolean alive = false;
 	
 
 	public gameObject() {
@@ -25,6 +26,7 @@ public class gameObject {
 		keyListen = gameGame.keyListen;
 		main = gameGame.mainGame;
 		main.steps(this); //place this object into the steps list, which is a list of every object in the game
+		alive = true;
 		
 		
 
@@ -37,7 +39,7 @@ public class gameObject {
 		keyListen = gameGame.keyListen;
 		main = gameGame.mainGame;
 		main.steps(this); //place this object into the steps list, which is a list of every object in the game
-	
+		alive = true;
 	}
 
 	public String getName() {
