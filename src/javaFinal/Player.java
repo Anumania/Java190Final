@@ -55,6 +55,14 @@ public class Player extends gameObject {
 		if (keyListen.getKeyPressed(KeyEvent.VK_F2)) {
 			Editor.writeMapFile(gameGame.stepList);
 		}
+		if (keyListen.getKeyPressed(KeyEvent.VK_F3)) {
+			try {
+				Editor.readMapFile(new File("./maps/map1.map"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void paint(Graphics2D g2d) {

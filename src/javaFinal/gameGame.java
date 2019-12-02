@@ -213,4 +213,10 @@ public class gameGame extends JFrame implements ActionListener {
 		 */
 	}
 
+	public static void resetStep() {
+		System.out.println("i got here");
+		stepList = new gameObject[20000];
+		stepListLength = 0;
+	}
+
 }

@@ -12,6 +12,9 @@ public class TemplateObject extends gameObject {
 		super();
 	}
 
+	public TemplateObject(int _x, int _y) {
+		super(_x, _y);
+	}
 	public void create() {
 		try {
 			objectImage = ImageIO.read(new File("./sprites/default.png"));

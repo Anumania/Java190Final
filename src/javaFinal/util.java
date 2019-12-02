@@ -11,3 +11,9 @@ public class util { // entirely utility class, for small universal methods that 
 
 }
 
+
+
+
+/*
+ * Class v = Editor.class; v.newInstance();
+ */

@@ -8,6 +8,10 @@ public class InvalidObject extends gameObject {
 		super();
 	}
 
+	public InvalidObject(int _x, int _y) {
+		super(_x, _y);
+	}
+
 	public void step() {
 	}
 	public String getName() {

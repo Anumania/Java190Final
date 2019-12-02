@@ -12,6 +12,9 @@ public class Collision extends gameObject {
 		super();
 	}
 
+	public Collision(int _x, int _y) {
+		super(_x, _y);
+	}
 	public void create() {
 		try {
 			objectImage = ImageIO.read(new File("./sprites/Floor.png"));

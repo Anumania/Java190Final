@@ -3,13 +3,17 @@ package javaFinal;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
+import java.io.InputStream;
+import java.io.PrintWriter;
 public class Editor extends gameObject {
 	// new types should always be added at the end of this list, to not break
 	// previous maps, as the maploader loads the objects by their index here.
-	public final String gameObjectReference[] = { "InvalidObject", "gameObject", "Overseer", "Player", "TemplateObject",
-			"Collision" };
+	public final Object gameObjectReference[] = { InvalidObject.class, gameObject.class, Overseer.class, Player.class,
+			TemplateObject.class, Collision.class };
+
 
 	/// asdas
 	// public final Object gameObjectObject[] =
@@ -44,17 +48,68 @@ public class Editor extends gameObject {
 		return true;
 	}
 
+	static int index; // for nextChar
 	public static void readMapFile(File a) throws IOException {
-		Scanner fileIn = new Scanner(a);
-		while (fileIn.hasNextLine()) {
+		gameGame.resetStep();
+		index = 0;
+		InputStream fileIn = new FileInputStream(a);
+		int objType;
+		int max = fileIn.read();
+		for (int i = 0; i <= max / 5; i++) {
+			objType = fileIn.read();
+			System.out.println(objType);
+			int objX = (fileIn.read() * 256) + fileIn.read();
+			int objY = (fileIn.read() * 256) + fileIn.read();
+			System.out.println(objX + " " + objY);
+			switch (objType) {
+			case 0:
+				new InvalidObject(objX, objY);
+				break;
+			case 1:
+				new gameObject(objX, objY);
+				break;
+			case 2:
+				new Overseer(objX, objY);
+				break;
+			case 3:
+				new Player(objX, objY);
+				break;
+			case 4:
+				new TemplateObject(objX, objY);
+				break;
+			case 5:
+				new Collision(objY, objY);
+				break;
 
+			default:
+				new InvalidObject(objX, objY);
+			}
 		}
 	}
 
+	private static char nextChar(String input) {
+		index++;
+		return input.charAt(index - 1);
+
+	}
+
 	public static void writeMapFile(gameObject[] objList) {
+		File outFile = new File("./maps/map1.map");
+		FileWriter fWriter = null;
+		PrintWriter pWriter;
+		try {
+			fWriter = new FileWriter(outFile);
+		} catch (IOException e) {
+			System.out.println("error occured when finding write map file");
+			e.printStackTrace();
+		}
+
+		pWriter = new PrintWriter(fWriter);
+		int quantity = 0;
 		String finalOut = "";
 		for (int i = 0; i < objList.length; i++) {
 			if (objList[i] != null) {
+				quantity++;
 				if (objList[i].getName().equals("gameObject")) {
 					finalOut += (char) 1;
 				} else if (objList[i].getName().equals("Overseer")) {
@@ -67,7 +122,8 @@ public class Editor extends gameObject {
 					finalOut += (char) 5;
 				} else {
 					finalOut += (char) 0;// invalid object, wont crash at startup
-				}
+				} 
+				System.out.println(objList[i].x + " " + objList[i].y);
 				finalOut += (char) (int) (Math.floor(objList[i].x / 256.0));
 				finalOut += (char) (int) (objList[i].x % 256.0);
 				finalOut += (char) (int) (Math.floor(objList[i].y / 256.0));
@@ -76,7 +132,9 @@ public class Editor extends gameObject {
 
 			}
 		}
-		System.out.println(finalOut);
+		pWriter.print((char) quantity); // this lets the writer know how many entries are in
+		pWriter.print(finalOut);
+		pWriter.close();
 	}
 
 }
