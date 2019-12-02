@@ -1,4 +1,4 @@
-package testGame;
+package javaFinal;
 
 public class util { // entirely utility class, for small universal methods that probably are already
 					// in a java library somewhere but i know how to make
