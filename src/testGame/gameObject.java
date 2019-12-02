@@ -3,10 +3,6 @@ package testGame;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 public class gameObject {
 	gameGame main;
@@ -27,11 +23,15 @@ public class gameObject {
 		main = gameGame.mainGame;
 		main.steps(this); //place this object into the steps list, which is a list of every object in the game
 		alive = true;
-		
+		create();
 		
 
 	}
-	public gameObject(int _x, int _y) {
+
+	public gameObject(int _x, int _y) {// this is to allow gameObjects to be initialized at a certain place, the create
+										// method is mainly supposed to be overridden, allowing gameObjects to
+										// initialize variables inside an "event" rather than in their constructors,
+										// which they have 2 of
 		x = _x;
 		y = _x;
 		ysize = 20;
@@ -40,6 +40,15 @@ public class gameObject {
 		main = gameGame.mainGame;
 		main.steps(this); //place this object into the steps list, which is a list of every object in the game
 		alive = true;
+		// question: if i run super on a child, what will happen on this next line? even
+		// if the child class overrides create?
+		// answer: it executes the child class create, niiice
+		create();
+	}
+
+	public void create() {
+		System.out.println(
+				"superclass executed create! you should override this by making a create method in your gameobject child");
 	}
 
 	public String getName() {

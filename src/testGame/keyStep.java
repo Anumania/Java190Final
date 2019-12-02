@@ -12,6 +12,8 @@ public class keyStep extends JFrame implements ActionListener {
 	boolean[] keyArray = new boolean[200];
 	boolean[] lastFrame = new boolean[200];
 	int[] keyTime = new int[200];
+	String keyboard_string = ""; // im really used to another programming language that looks like this for
+									// this exact term, this is not a mistake.
 	
 
 	public keyStep(gameGame gamer) {// im a goddamn wizard i guessed how this worked and i was r i g h t.
@@ -22,7 +24,8 @@ public class keyStep extends JFrame implements ActionListener {
 			public void keyPressed(KeyEvent event) {
 				// System.out.println("you pressed");
 				// System.out.print(event);
-				// System.out.println(event.getKeyCode());
+				// System.out.println(event.getKeyCode()); // use this to find keycodes if the
+				// constants arent doing it for you
 				keys = event.getKeyCode();
 				keyArray[event.getKeyCode()] = true;
 				// timeArray[event.getKeyCode()]++;
@@ -36,17 +39,11 @@ public class keyStep extends JFrame implements ActionListener {
 			}
 
 			public void keyTyped(KeyEvent event) {
-				// System.out.println("you typed");
-				// int e = KeyEvent.VK_A; //in order to turn the ints that this returns into
-				// input, use KeyEvent.VK_A, the int that this returns is likely like 20 or
-				// something but use these
-				// event.getKeyChar();
-				//keys = event.getKeyInt()
-
-				// System.out.println(event.getKeyCode());
-				// System.out.println(event.getKeyChar());
-
-
+				keyboard_string += event.getKeyChar();
+				if (event.getKeyCode() == 8) {// keycode for backspace
+					// TODO ask teacher if you can define what certain operators do, example:
+					// keyboard_string -= event.getKeyChar();
+				}
 			}
 		};
 		gamer.addKeyListener(listener);
@@ -87,6 +84,15 @@ public class keyStep extends JFrame implements ActionListener {
 				keyTime[i] = 0;
 			}
 		}
+	}
+
+	public String keyboardString() { // getter and setter except you cant really set it (you can since its a public
+										// variable but i cant think of any reason to atm)
+		return keyboard_string;
+	}
+
+	public void resetKeyboardString() {
+		keyboard_string = "";
 	}
 }
 

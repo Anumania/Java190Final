@@ -1,12 +1,14 @@
 package testGame;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 
 public class Editor extends gameObject {
+	// new types should always be added at the end of this list, to not break
+	// previous maps.
 	public final String gameObjectReference[] = {"gameObject", "Overseer", "Player", "TemplateObject"};
-	public final Object gameObjectObject[] = 
+
+	// public final Object gameObjectObject[] =
 	public Editor() {
 		super();
 	}
@@ -31,6 +33,10 @@ public class Editor extends gameObject {
 		
 		// int a = conditional ? true : false; //this will return true or false depending on how the conditional goes
 		//int a = (b == 0) ? 10 : 11 this is how this thing works im not actually sure what its called
+	}
+
+	public boolean exportMap() {// returns true if works.
+		return true;
 	}
 
 }
