@@ -7,28 +7,29 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class TemplateObject extends gameObject {
-	public TemplateObject() {
+public class Collision extends gameObject {
+	public Collision() {
 		super();
 	}
 
 	public void create() {
 		try {
-			objectImage = ImageIO.read(new File("./sprites/default.png"));
+			objectImage = ImageIO.read(new File("./sprites/Floor.png"));
 		} catch (IOException e) {
-			System.out.println("read of default sprite failed, make new image called default.png please :)");
+			System.out.println("read of floor sprite failed, make Floor.png");
 			e.printStackTrace();
 		}
+
 	}
 	public void step() {
 	}
 	public String getName() {
-		return "TemplateObject";	
+		return "Collision";
 	}
 	public void paint(Graphics2D g2d) {
 
 		g2d.setColor(Color.BLUE);
-		g2d.drawImage(objectImage, x, y, main);
+		g2d.drawRect(x, y, xsize, ysize);
 
 	}
 

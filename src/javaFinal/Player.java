@@ -50,7 +50,10 @@ public class Player extends gameObject {
 		}
 		if (keyListen.getKeyPressed(KeyEvent.VK_F1)) {
 
-			new Overseer();
+			new Overseer(20, 20);
+		}
+		if (keyListen.getKeyPressed(KeyEvent.VK_F2)) {
+			Editor.writeMapFile(gameGame.stepList);
 		}
 	}
 

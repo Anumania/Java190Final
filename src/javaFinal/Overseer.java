@@ -31,7 +31,7 @@ public class Overseer extends gameObject {
 		}
 	}
 	public String getName() {
-		return "gameObject";	
+		return "Overseer";
 	}
 	public void paint(Graphics2D g2d) {
 
