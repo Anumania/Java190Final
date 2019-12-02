@@ -3,6 +3,11 @@ package testGame;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class gameObject {
 	gameGame main;
@@ -12,12 +17,18 @@ public class gameObject {
 	int ysize;
 	int xsize; // this is used for hitboxes
 	boolean alive = false;
+	BufferedImage objectImage;
 	
 
 	public gameObject() {
 		x = 200;
 		y = 200;
-		ysize = 20;
+		try {
+			objectImage = ImageIO.read(new File("./sprites/default.png"));
+		} catch (IOException e) {
+			System.out.println("read of default sprite failed, make new image called default.png please :)");
+			e.printStackTrace();
+		}
 		xsize = 20;
 		keyListen = gameGame.keyListen;
 		main = gameGame.mainGame;

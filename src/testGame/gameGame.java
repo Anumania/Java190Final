@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -40,6 +39,7 @@ public class gameGame extends JFrame implements ActionListener {
 	gameObject testobj;
 	boolean debug = false;
 	boolean speedTest = false;
+	int FPS;
 	
 	
 
@@ -54,13 +54,6 @@ public class gameGame extends JFrame implements ActionListener {
 	public gameGame() {
 		super("test game"); // this is the game title also this has to be first
 		mainGame = this;
-		File rootName = new File("./sprites/test.jpg");
-
-		try {
-			System.out.println(rootName.getCanonicalPath());
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
 		
 
 		// setIgnoreRepaint(true);
@@ -157,6 +150,7 @@ public class gameGame extends JFrame implements ActionListener {
 		bruh++;
 		if (skruh >= 1000) {
 			System.out.println("fps: " + bruh);
+			FPS = bruh;
 			bruh = 0;
 			skruh = 0;
 			

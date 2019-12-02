@@ -2,10 +2,9 @@ package testGame;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-
 public class Editor extends gameObject {
 	// new types should always be added at the end of this list, to not break
-	// previous maps.
+	// previous maps, as the maploader loads the objects by their index here.
 	public final String gameObjectReference[] = {"gameObject", "Overseer", "Player", "TemplateObject"};
 
 	// public final Object gameObjectObject[] =
@@ -36,6 +35,7 @@ public class Editor extends gameObject {
 	}
 
 	public boolean exportMap() {// returns true if works.
+
 		return true;
 	}
 
