@@ -38,11 +38,23 @@ public class keyStep extends JFrame implements ActionListener {
 				// timeArray[event.getKeyCode()]=0;
 			}
 
-			public void keyTyped(KeyEvent event) {
-				keyboard_string += event.getKeyChar();
-				if (event.getKeyCode() == 8) {// keycode for backspace
+			public void keyTyped(KeyEvent event) { // keytyped automatically uses windows's environment variables for
+													// typing preferences.(i think) also keyTyped has different keycodes
+													// for some reason, likely these align with ascii or unicode rather
+													// than vk codes
+				if (event.getKeyChar() == (char) 8) {// keycode for backspace, for some reason getKeyCode doesnt work
+														// correctly and returns 0 no matter the key pressed
 					// TODO ask teacher if you can define what certain operators do, example:
 					// keyboard_string -= event.getKeyChar();
+					if (keyboard_string.length() > 0) {
+						keyboard_string = keyboard_string.substring(0, keyboard_string.length() - 1);// backspace counts
+																										// as a
+																										// character, be
+																										// careful
+					}
+				}
+				else {
+					keyboard_string += event.getKeyChar();
 				}
 			}
 		};

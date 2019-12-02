@@ -39,7 +39,7 @@ public class Overseer extends gameObject {
 		g2d.setColor(Color.BLACK);
 		g2d.drawString(main.FPS + "", 20, 60);
 		if (console) {
-			g2d.drawString(keyListen.keyboardString(), 20, 60); // be careful, this draws from some weird coordinates :/
+			g2d.drawString(keyListen.keyboardString(), 20, 90); // be careful, this draws from some weird coordinates :/
 
 		}
 	}
