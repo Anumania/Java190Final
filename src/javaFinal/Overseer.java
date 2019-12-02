@@ -2,6 +2,7 @@ package javaFinal;
 //oversees everything
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 
 public class Overseer extends gameObject {
 	boolean console;
@@ -24,14 +25,16 @@ public class Overseer extends gameObject {
 			System.out.println("console is " + (console ? "on" : "off")); // ternary operator, super advanced cool
 																			// stuff, absolutely radical
 		}
+		if (keyListen.getKeyPressed(KeyEvent.VK_ENTER)) {
+			keyListen.keyboard_string = keyListen.keyboard_string.substring(0, keyListen.keyboard_string.length() - 1);
+			consoleCommands(keyListen.getKeyboardString(), null);
+		}
 	}
 	public String getName() {
 		return "gameObject";	
 	}
 	public void paint(Graphics2D g2d) {
 
-		g2d.setColor(Color.BLUE);
-		g2d.drawRect(x, y, xsize, ysize);
 
 	}
 
@@ -39,9 +42,18 @@ public class Overseer extends gameObject {
 		g2d.setColor(Color.BLACK);
 		g2d.drawString(main.FPS + "", 20, 60);
 		if (console) {
-			g2d.drawString(keyListen.keyboardString(), 20, 90); // be careful, this draws from some weird coordinates :/
+			g2d.drawString(keyListen.getKeyboardString(), 20, 90); // be careful, this draws from some weird coordinates
+																	// :/
 
 		}
+	}
+
+	public void consoleCommands(String command, String[] args) {
+		if (command.contentEquals("editor")) {
+			System.out.println("editor :)");
+		}
+		System.out.println(command);
+		System.out.println("editor");
 	}
 
 }

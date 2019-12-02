@@ -98,7 +98,7 @@ public class keyStep extends JFrame implements ActionListener {
 		}
 	}
 
-	public String keyboardString() { // getter and setter except you cant really set it (you can since its a public
+	public String getKeyboardString() { // getter and setter except you cant really set it (you can since its a public
 										// variable but i cant think of any reason to atm)
 		return keyboard_string;
 	}
