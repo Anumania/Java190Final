@@ -39,7 +39,8 @@ public class gameGame extends JFrame implements ActionListener {
 	gameObject testobj;
 	boolean debug = false;
 	boolean speedTest = false;
-	int FPS;
+	int FPS; // usually finals are all caps, but FPS is usually like this
+	int timeInFrames;
 	
 	
 
@@ -110,18 +111,21 @@ public class gameGame extends JFrame implements ActionListener {
 	public void paint(Graphics g) { // the graphics object originates here, cant make your own, also this is called
 		
 		// automagically :)
+		gameGame main = gameGame.mainGame;
 		offImage = createImage(xDimension, yDimension);
 		offGraphics = offImage.getGraphics();
+		BufferedImage imageLayer = new BufferedImage(main.xDimension, main.yDimension, BufferedImage.TYPE_INT_ARGB);
 		
 		Graphics2D g2d = (Graphics2D) offGraphics; // draw everything onto a seperate canvas
-		g2d.setColor(Color.white);
+		g2d.setColor(Color.blue);
+		// g2d.setComposite(AlphaComposite.Clear);
 		g2d.fillRect(0, 0, xDimension, yDimension); // wipe the previous screen
-
+		g2d.setBackground(new Color(255, 0, 0, 100));
 		if (stepListLength != 0) {
 			for (int i = 0; i < stepListLength; i++) {
 				stepList[i].x-= gameGame.camX; stepList[i].y-= gameGame.camY; //camera movement
 				// TODO dont draw things outside of the screen border
-				stepList[i].paint(g2d);
+				stepList[i].paint(g2d, imageLayer);
 				stepList[i].x+= gameGame.camX; stepList[i].y+= gameGame.camY;
 			}
 		}
@@ -132,6 +136,7 @@ public class gameGame extends JFrame implements ActionListener {
 				stepList[i].paintGUI(g2d);
 			}
 		}
+		offGraphics.drawImage(imageLayer, 0, 0, this);
 		g.drawImage(offImage, (int) x, (int) y, this);
 		// repaint(); // this line makes it paint many times :))) very good
 		 // draw the seperate canvas onto the screen, removing flickering.
@@ -142,6 +147,7 @@ public class gameGame extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) { // this runs when timer is done
+		timeInFrames++;
 		keyListen.frameCount();
 		double i = arg0.getWhen() - prevTime;
 		prevTime = arg0.getWhen();

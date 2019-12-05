@@ -11,12 +11,10 @@ import java.io.PrintWriter;
 public class Editor extends gameObject {
 	// new types should always be added at the end of this list, to not break
 	// previous maps, as the maploader loads the objects by their index here.
-	public final Object gameObjectReference[] = { InvalidObject.class, gameObject.class, Overseer.class, Player.class,
+	public final static Class gameObjectReference[] = { InvalidObject.class, gameObject.class, Overseer.class,
+			Player.class,
 			TemplateObject.class, Collision.class };
 
-
-	/// asdas
-	// public final Object gameObjectObject[] =
 	public Editor() {
 		super();
 	}
@@ -61,29 +59,16 @@ public class Editor extends gameObject {
 			int objX = (fileIn.read() * 256) + fileIn.read();
 			int objY = (fileIn.read() * 256) + fileIn.read();
 			System.out.println(objX + " " + objY);
-			switch (objType) {
-			case 0:
-				new InvalidObject(objX, objY);
-				break;
-			case 1:
-				new gameObject(objX, objY);
-				break;
-			case 2:
-				new Overseer(objX, objY);
-				break;
-			case 3:
-				new Player(objX, objY);
-				break;
-			case 4:
-				new TemplateObject(objX, objY);
-				break;
-			case 5:
-				new Collision(objY, objY);
-				break;
-
-			default:
-				new InvalidObject(objX, objY);
+			try {
+				gameObjectReference[objType].newInstance();
+			} catch (InstantiationException e) {
+				System.out.println("cant create class");
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				System.out.println("error:accessed incorrectly");
+				e.printStackTrace();
 			}
+
 		}
 	}
 
@@ -110,18 +95,10 @@ public class Editor extends gameObject {
 		for (int i = 0; i < objList.length; i++) {
 			if (objList[i] != null) {
 				quantity++;
-				if (objList[i].getName().equals("gameObject")) {
-					finalOut += (char) 1;
-				} else if (objList[i].getName().equals("Overseer")) {
-					finalOut += (char) 2;
-				} else if (objList[i].getName().equals("Player")) {
-					finalOut += (char) 3;
-				} else if (objList[i].getName().equals("TemplateObject")) {
-					finalOut += (char) 4;
-				} else if (objList[i].getName().equals("Collision")) {
-					finalOut += (char) 5;
-				} else {
-					finalOut += (char) 0;// invalid object, wont crash at startup
+				for (int j = 0; j < gameObjectReference.length; j++) {
+					if (gameObjectReference[j] == objList[i].getClass()) {
+						finalOut += (char) j;
+					}
 				} 
 				System.out.println(objList[i].x + " " + objList[i].y);
 				finalOut += (char) (int) (Math.floor(objList[i].x / 256.0));

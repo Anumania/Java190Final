@@ -81,7 +81,8 @@ public class gameObject {
 		}
 	}
 
-	public void paint(Graphics2D g2d) { // it is expected that all objects with step will have paint
+	public void paint(Graphics2D g2d, BufferedImage imageLayer) { // it is expected that all objects with step will have
+																	// paint
 
 		// System.out.println(wait); // yeah, you only print once
 

@@ -1,7 +1,9 @@
 package javaFinal;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -10,23 +12,34 @@ import javax.imageio.ImageIO;
 
 public class Player extends gameObject {
 	BufferedImage sprite;
-	
-	
+	double angle = 0;
+	double targetAngle = 0;
+	double scale = 1;
+	static Player me; // this is to allow for other objects to interact with player without foreaching
+						// through the entire steplist
 
 	public Player() {
 		super();
 		create();
 	}
+
 	public Player(int _x, int _y) {
 		super(_x,_y);
 		create();
 	}
+
 	public String getName() {
 		return "Player";	
 	}
 	
 	public void create() {
-		File rootName = new File("./sprites/Dinklet/Dinklet1.png");
+		me = this;
+		xsize = 32;
+		ysize = 32;
+		y = main.yDimension / 2;
+		x = main.xDimension / 2;
+
+		File rootName = new File("./sprites/Player.png");
 		try {
 			sprite = ImageIO.read(rootName);
 		} catch (IOException e) {
@@ -36,17 +49,23 @@ public class Player extends gameObject {
 	
 	
 	public void step() {
+
 		if (keyListen.getKey(KeyEvent.VK_LEFT)) {
-			x--;
+			targetAngle = 270.0;
 		}
 		if (keyListen.getKey(KeyEvent.VK_RIGHT)) {
-			x++;
+			targetAngle = 90.0;
 		}
 		if (keyListen.getKey(KeyEvent.VK_DOWN)) {
-			y++;
+			targetAngle = 180.0;
 		}
 		if (keyListen.getKey(KeyEvent.VK_UP)) {
-			y--;
+			if (targetAngle == 270.0) {
+				targetAngle = 360.0;
+			} 
+			else {
+			targetAngle = 0.0;
+			}
 		}
 		if (keyListen.getKeyPressed(KeyEvent.VK_F1)) {
 
@@ -63,11 +82,50 @@ public class Player extends gameObject {
 				e.printStackTrace();
 			}
 		}
+		if (keyListen.getKey(KeyEvent.VK_Z)) {
+			// TODO add the actual game part
+			scale++;
+		}
+
+		angle += util.betterAngle(targetAngle, angle) * 30.0;
+		angle %= 360;
+		if (angle < 0.0) {
+			angle += 360;
+		}
+		
+		scale -= 0.1;
+		scale = util.clamp(scale, 1.0, 1.5);
+		if (main.timeInFrames % 240 == 3) {
+			new Arrow(Arrow.UP);
+		}
+
 	}
 
-	public void paint(Graphics2D g2d) {
+	public void paint(Graphics2D g2d, BufferedImage imageLayer) {
 		//g2d.setColor(Color.BLUE);
-		g2d.drawImage(sprite, (int) x, (int) y, main);
+		// source: https://stackoverflow.com/questions/8639567/java-rotating-images
+		
+		AffineTransform a = new AffineTransform(); // AffineTransform.getRotateInstance(angle, x + xsize / 2, y + ysize
+													// / 2);
+		a.translate(x + xsize / 2, y + ysize / 2);
+		a.rotate(Math.toRadians(angle)); // S2: rotate around anchor
+		a.translate(-(x + xsize / 2), -(y + ysize / 2));
+		a.translate(x + xsize / 2.0, y + ysize / 4.0);
+		a.scale(scale, scale);
+		a.translate(-(x + xsize / 2), -(y + ysize / 4));
+
+
+		// origin
+
+		g2d.setTransform(a);
+		g2d.drawImage(sprite, (int) x, (int) y, Color.white, main);
+		g2d.setTransform(new AffineTransform());
+		g2d.setColor(Color.black);
+		g2d.drawString(scale + "", 60, 60);
+
+
+		// g2d.setTransform(null);
+		// AffineTransform testy = new AffineTransform();
 		//g2d.drawRect(x, y, xsize, ysize);
 
 	}
