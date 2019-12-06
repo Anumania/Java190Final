@@ -82,6 +82,7 @@ public class Arrow extends gameObject {
 	}
 	
 	public void paint(Graphics2D g2d, BufferedImage imageLayer) {
+
 		AffineTransform a = new AffineTransform();
 		a.translate(x + xsize / 2, y + ysize / 2);
 		a.rotate(Math.toRadians(180)); // S2: rotate around anchor
@@ -97,7 +98,10 @@ public class Arrow extends gameObject {
 		// g2d.setComposite(ac);
 		// objectImage = Transparency.makeImageTranslucent(objectImage, 0.5);
 		// g2d.drawImage(objectImage, (int) x, (int) y, Color.white, main);
-		util.drawToImageCorrectly(x, y, objectImage, imageLayer);
+		// imageLayer = util.drawToImageCorrectly(x, y, objectImage, imageLayer);
+		// imageLayer.getGraphics().drawImage(objectImage, x, y, main);
+		g2d.drawImage(objectImage, x, y, main);
+
 		// g2d.drawImage
 		g2d.setTransform(new AffineTransform());
 	}
