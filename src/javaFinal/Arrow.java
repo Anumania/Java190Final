@@ -10,20 +10,32 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Arrow extends gameObject {
+	private double scale = 1;
 	int direction = 0;
 	public static final int UP = 0;
 	public static final int RIGHT = 1;
 	public static final int DOWN = 2;
 	public static final int LEFT = 3;
+	public int speed = 1;
 
 	public Arrow(int _direction) { // up = 0, right = 1, down = 2, left = 3; (these are where the arrow comes from)
 		super();
 		direction = _direction;
+		create();
 		
+	}
+
+	public Arrow(int _direction, double _speed) { // up = 0, right = 1, down = 2, left = 3; (these are where the arrow
+													// comes from)
+		super();
+		direction = _direction;
+		speed = (int) _speed;
+		create();
 	}
 
 	public Arrow(int _x, int _y) { // dont use this one :)
 		super(_x, _y);
+		create();
 	}
 	
 	public void create() {
@@ -36,44 +48,49 @@ public class Arrow extends gameObject {
 			e.printStackTrace();
 		} // 1024
 			// Shape a = new
+		System.out.println(direction);
 
 		makeImageTransparent();
 
 		switch (direction) {
 		case 0:
-			x = main.xDimension / 2;
+			x = Player.me.x;
 			y = 0;
 			break;
 		case 1:
-			x = main.xDimension;
-			y = main.yDimension / 2;
+			x = main.yDimension;
+			y = Player.me.y;
 			break;
 		case 2:
-			x = main.xDimension / 2;
+			x = Player.me.x;
 			y = main.yDimension;
 			break;
 		case 3:
-			x = 0;
-			y = main.yDimension / 2;
+			x = Player.me.x - Math.abs(Player.me.x - main.yDimension); // lol
+			y = Player.me.y;
 			break;
 
 		}
 	}
 	
 	public void step() {
+		if (alive) {
 		switch (direction) {
 		case 0:
-			y++;
+			y += speed;
 			break;
 		case 1:
-			x--;
+			x -= speed;
 			break;
 		case 2:
-			y--;
+			y -= speed;
 			break;
 		case 3:
-			x--;
+			x += speed;
 			break;
+			}
+		} else {
+			scale += 0.1;
 		}
 	}
 	
@@ -85,9 +102,11 @@ public class Arrow extends gameObject {
 
 		AffineTransform a = new AffineTransform();
 		a.translate(x + xsize / 2, y + ysize / 2);
-		a.rotate(Math.toRadians(180)); // S2: rotate around anchor
+		a.rotate(Math.toRadians((90 * direction) + 180)); // S2: rotate around anchor
 		a.translate(-(x + xsize / 2), -(y + ysize / 2));
-
+		a.translate(x + xsize / 2.0, y + ysize / 4.0);
+		a.scale(scale, scale);
+		a.translate(-(x + xsize / 2), -(y + ysize / 4));
 
 		// g2d.setComposite(AlphaComposite.SrcOver);
 		g2d.setTransform(a);

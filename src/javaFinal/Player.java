@@ -94,8 +94,9 @@ public class Player extends gameObject {
 		
 		scale -= 0.1;
 		scale = util.clamp(scale, 1.0, 1.5);
-		if (main.timeInFrames % 240 == 3) {
-			new Arrow(Arrow.UP);
+		if (main.timeInFrames % 60 == 3) {
+			new Arrow((int) (Math.random() * 4), 5.0);
+
 		}
 
 	}

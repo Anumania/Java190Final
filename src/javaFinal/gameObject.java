@@ -54,7 +54,7 @@ public class gameObject {
 		// question: if i run super on a child, what will happen on this next line? even
 		// if the child class overrides create?
 		// answer: it executes the child class create, niiice
-		create();
+		// create();
 	}
 
 	public void create() {
