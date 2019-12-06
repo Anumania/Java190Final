@@ -104,7 +104,13 @@ public class gameGame extends JFrame implements ActionListener {
 //			camY-=5;
 //		}
 		
-		if (stepListLength != 0){ for (int i = 0; i < stepListLength; i++) {stepList[i].step();}}
+		if (stepListLength != 0) {
+			for (int i = 0; i < stepListLength; i++) {
+				if (stepList[i] != null) {
+					stepList[i].step();
+				}
+			}
+		}
 	}
 
 
@@ -123,17 +129,24 @@ public class gameGame extends JFrame implements ActionListener {
 		g2d.setBackground(new Color(255, 0, 0, 100));
 		if (stepListLength != 0) {
 			for (int i = 0; i < stepListLength; i++) {
+				if(stepList[i] != null) {
 				stepList[i].x-= gameGame.camX; stepList[i].y-= gameGame.camY; //camera movement
 				// TODO dont draw things outside of the screen border
 				stepList[i].paint(g2d, imageLayer);
 				stepList[i].x+= gameGame.camX; stepList[i].y+= gameGame.camY;
+				}
 			}
 		}
 		
 		if (stepListLength != 0) {
 			for (int i = 0; i < stepListLength; i++) { //camera movement
+				{
+					if (stepList[i] != null) {
+
 				// TODO dont draw things outside of the screen border
 				stepList[i].paintGUI(g2d);
+					}
+				}
 			}
 		}
 		offGraphics.drawImage(imageLayer, 0, 0, this);
@@ -181,10 +194,10 @@ public class gameGame extends JFrame implements ActionListener {
 
 	}
 
-	public void steps(gameObject l) {
+	public int steps(gameObject l) {
 		stepList[stepListLength] = l;
 		stepListLength++;
-
+		return stepListLength;
 	}
 	public void steps(gameObject l,int k) {
 		if(stepList[k] != null) {
@@ -223,6 +236,12 @@ public class gameGame extends JFrame implements ActionListener {
 		System.out.println("i got here");
 		stepList = new gameObject[20000];
 		stepListLength = 0;
+
+	}
+
+	public static void kill(gameObject object) {
+		// System.out.println(stepList[1244]);
+		stepList[object.stepNum - 1] = null;
 	}
 
 }

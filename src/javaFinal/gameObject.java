@@ -18,7 +18,7 @@ public class gameObject {
 	int xsize; // this is used for hitboxes
 	boolean alive = false;
 	BufferedImage objectImage;
-	
+	int stepNum;
 
 	public gameObject() {
 		x = 200;
@@ -32,7 +32,8 @@ public class gameObject {
 		xsize = 20;
 		keyListen = gameGame.keyListen;
 		main = gameGame.mainGame;
-		main.steps(this); //place this object into the steps list, which is a list of every object in the game
+		stepNum = main.steps(this); // place this object into the steps list, which is a list of every object in the
+									// game
 		alive = true;
 		create();
 		
@@ -111,11 +112,15 @@ public class gameObject {
 		if (obj1.y + obj1.ysize > obj2.y && obj1.y < obj2.y) {yCol = true;}
 
 		if(xCol && yCol) {
+			System.out.println(yCol + " " + xCol);
+
 		return true;
 		}
 		return false;
 	}
-	public static boolean checkCollision(int targx, int targy,gameObject obj) { //check if you want a specific point if collisioned 
+
+	public static boolean checkCollision(gameObject obj, int targx, int targy) { // check if you want a specific point
+																					// if collisioned
 		boolean xCol = false;																	
 		boolean yCol = false;
 

@@ -48,9 +48,9 @@ public class Arrow extends gameObject {
 			e.printStackTrace();
 		} // 1024
 			// Shape a = new
-		System.out.println(direction);
+			// System.out.println(direction);
 
-		makeImageTransparent();
+		// makeImageTransparent();
 
 		switch (direction) {
 		case 0:
@@ -58,7 +58,7 @@ public class Arrow extends gameObject {
 			y = 0;
 			break;
 		case 1:
-			x = main.yDimension;
+			x = Player.me.x + main.yDimension / 2;
 			y = Player.me.y;
 			break;
 		case 2:
@@ -66,7 +66,7 @@ public class Arrow extends gameObject {
 			y = main.yDimension;
 			break;
 		case 3:
-			x = Player.me.x - Math.abs(Player.me.x - main.yDimension); // lol
+			x = Player.me.x - main.yDimension / 2;
 			y = Player.me.y;
 			break;
 
@@ -75,6 +75,15 @@ public class Arrow extends gameObject {
 	
 	public void step() {
 		if (alive) {
+			if (gameObject.checkCollision(this, Player.me.x + Player.me.xsize / 2, Player.me.y + Player.me.ysize / 2)) {
+				if (Player.timeSinceAction < 8) {
+					// System.out.println((int) Player.me.direction + " " + direction * 90);
+					if (((int) Player.me.direction) == direction * 90) {
+
+					alive = false;
+					}
+				}
+			}
 		switch (direction) {
 		case 0:
 			y += speed;
@@ -91,6 +100,10 @@ public class Arrow extends gameObject {
 			}
 		} else {
 			scale += 0.1;
+			if (scale > 3) {
+				gameGame.kill(this);
+			}
+
 		}
 	}
 	
@@ -119,10 +132,23 @@ public class Arrow extends gameObject {
 		// g2d.drawImage(objectImage, (int) x, (int) y, Color.white, main);
 		// imageLayer = util.drawToImageCorrectly(x, y, objectImage, imageLayer);
 		// imageLayer.getGraphics().drawImage(objectImage, x, y, main);
+		// Composite og = g2d.getComposite();
+		// AlphaComposite ac = java.awt.AlphaComposite.getInstance(AlphaComposite.CLEAR,
+		// 0.5f);
+		//
+		// Graphics2D imageGraphics = (Graphics2D) imageLayer.getGraphics();
+		// g2d.setComposite(ac);
+		//imageLayer.((Graphics2D)getGraphics()).setComposite(ac);
+		int scaledScale = (int) (scale * 255) - 255;
+		objectImage = makeImagePartiallyTransparent((255 - scaledScale), objectImage);
 		g2d.drawImage(objectImage, x, y, main);
 
+		// g2d.fillRect(x, y, 30, 30);
+		// g2d.setComposite(og);
+		// imageGraphics.drawRect(0, 0, 500, 500);
 		// g2d.drawImage
 		g2d.setTransform(new AffineTransform());
+
 	}
 
 	public void makeImageTransparent() {
@@ -180,6 +206,27 @@ public class Arrow extends gameObject {
 		// test.getPixels(0, 0, xsize - 1, ysize - 1, array);
 
 		// System.out.println(array);
+	}
+
+	public BufferedImage makeImagePartiallyTransparent(int amount, BufferedImage image) {
+		if (amount > 255 || amount < 0) {
+			amount = 0;
+		}
+		WritableRaster outRaster = null;
+		int[] dArray = new int[image.getWidth() * image.getHeight() * 4];
+		int[] iArray = new int[4];
+		// BufferedImage image2 = new BufferedImage(32, 32,
+		// BufferedImage.TYPE_INT_ARGB);
+		WritableRaster imageRaster = image.getRaster();
+		imageRaster.getPixels(0, 0, image.getWidth(), image.getHeight(), dArray);
+		for (int i = 3; i < dArray.length; i += 4) {
+			if (dArray[i] != 0) {
+				dArray[i] = amount;
+			}
+		}
+		imageRaster.setPixels(0, 0, image.getWidth(), image.getHeight(), dArray);
+		return image;
+
 	}
 
 }

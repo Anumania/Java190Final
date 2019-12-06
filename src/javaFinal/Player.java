@@ -12,8 +12,9 @@ import javax.imageio.ImageIO;
 public class Player extends gameObject {
 	BufferedImage sprite;
 	double angle = 0;
-	double targetAngle = 0;
+	double direction = 0;
 	double scale = 1;
+	static int timeSinceAction = 0;
 	static Player me; // this is to allow for other objects to interact with player without foreaching
 						// through the entire steplist
 
@@ -50,20 +51,20 @@ public class Player extends gameObject {
 	public void step() {
 
 		if (keyListen.getKey(KeyEvent.VK_LEFT)) {
-			targetAngle = 270.0;
+			direction = 270.0;
 		}
 		if (keyListen.getKey(KeyEvent.VK_RIGHT)) {
-			targetAngle = 90.0;
+			direction = 90.0;
 		}
 		if (keyListen.getKey(KeyEvent.VK_DOWN)) {
-			targetAngle = 180.0;
+			direction = 180.0;
 		}
 		if (keyListen.getKey(KeyEvent.VK_UP)) {
-			if (targetAngle == 270.0) {
-				targetAngle = 360.0;
+			if (direction == 270.0) {
+				direction = 360.0;
 			} 
 			else {
-			targetAngle = 0.0;
+				direction = 0.0;
 			}
 		}
 		if (keyListen.getKeyPressed(KeyEvent.VK_F1)) {
@@ -81,12 +82,14 @@ public class Player extends gameObject {
 				e.printStackTrace();
 			}
 		}
-		if (keyListen.getKey(KeyEvent.VK_Z)) {
+		timeSinceAction++;
+		if (keyListen.getKeyPressed(KeyEvent.VK_Z)) {
 			// TODO add the actual game part
-			scale++;
+			timeSinceAction = 0;
+			scale += 3;
 		}
 
-		angle += util.betterAngle(targetAngle, angle) * 30.0;
+		angle += util.betterAngle(direction, angle) * 30.0;
 		angle %= 360;
 		if (angle < 0.0) {
 			angle += 360;
@@ -94,7 +97,7 @@ public class Player extends gameObject {
 		
 		scale -= 0.1;
 		scale = util.clamp(scale, 1.0, 1.5);
-		if (main.timeInFrames % 60 == 3) {
+		if (main.timeInFrames % 15 == 3) {
 			new Arrow((int) (Math.random() * 4), 5.0);
 
 		}
