@@ -1,6 +1,5 @@
 package javaFinal;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
@@ -118,10 +117,10 @@ public class Player extends gameObject {
 		// origin
 
 		g2d.setTransform(a);
-		g2d.drawImage(sprite, (int) x, (int) y, Color.white, main);
+		g2d.drawImage(sprite, (int) x, (int) y, main);
 		g2d.setTransform(new AffineTransform());
-		g2d.setColor(Color.black);
-		g2d.drawString(scale + "", 60, 60);
+		// g2d.setColor(Color.black);
+		// g2d.drawString(scale + "", 60, 60);
 
 
 		// g2d.setTransform(null);
