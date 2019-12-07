@@ -45,7 +45,7 @@ public class gameObject {
 										// initialize variables inside an "event" rather than in their constructors,
 										// which they have 2 of
 		x = _x;
-		y = _x;
+		y = _y;
 		ysize = 20;
 		xsize = 20;
 		keyListen = gameGame.keyListen;
@@ -90,8 +90,8 @@ public class gameObject {
 		// casting graphics to graphics2d to use graphics2d
 
 		
-		g2d.setColor(Color.BLACK);
-		g2d.drawRect(x, y, xsize, ysize);
+		//g2d.setColor(Color.BLACK);
+		//g2d.drawRect(x, y, xsize, ysize);
 
 		// x += 0.01;
 

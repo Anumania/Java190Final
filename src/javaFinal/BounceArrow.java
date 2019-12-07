@@ -85,6 +85,7 @@ public class BounceArrow extends gameObject {
 			angle+=10;
 			alive = false;
 			bounced = true;
+			Player.combo = 0;
 		}
 		if (bounced && bouncing) {
 			xspd = nextMove(xspd);
@@ -107,6 +108,7 @@ public class BounceArrow extends gameObject {
 						}
 						else {
 							alive = false;
+							Player.increaseCombo();
 						}
 					}
 				}

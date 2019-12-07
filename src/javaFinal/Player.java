@@ -16,6 +16,7 @@ public class Player extends gameObject {
 	double direction = 0;
 	double scale = 1;
 	static int timeSinceAction = 0;
+	static int combo;
 	static Player me; // this is to allow for other objects to interact with player without foreaching
 						// through the entire steplist
 	private boolean changeBPM = false;
@@ -47,6 +48,7 @@ public class Player extends gameObject {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		new ComboCounter(550,50);
 	}
 	
 	
@@ -151,6 +153,10 @@ public class Player extends gameObject {
 		g2d.setColor(Color.BLACK);
 		g2d.drawString(main.FPS+"", 60, 60);
 		g2d.drawString(main.BPM + "", 30, 60);
+	}
+	public static void increaseCombo() {
+		combo++;
+		ComboCounter.scale = 2.5;
 	}
 
 }
