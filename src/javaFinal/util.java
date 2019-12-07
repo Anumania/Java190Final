@@ -1,7 +1,5 @@
 package javaFinal;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 
@@ -50,44 +48,17 @@ public class util { // entirely utility class, for small universal methods that 
 	 * @return transparent image
 	 */
 	public static BufferedImage drawToImageCorrectly(int x, int y, BufferedImage source, BufferedImage dest) {
-
-		// long startTime = System.nanoTime();
+		long startTime = System.nanoTime();
 		gameGame main = gameGame.mainGame;
-		//WritableRaster destRaster = dest.getRaster();
+		WritableRaster destRaster = dest.getRaster();
+		// System.out.println(destRaster);
 		WritableRaster sourceRaster = source.getRaster();
-		// dest.setRGB(x, y, rgb);\
-		
+
 		// int[] dArray = new int[4];
 		// int[] sArray = new int[4];
-		//int numBands = source.getNumBands();
-		int numBands = 3;
-		//source.getRGB(numBands, numBands, numBands, numBands, null, numBands, numBands);
-		int[] sArray = new int[(source.getWidth() * source.getHeight()) * numBands];
-		int[] sourcePixels = source.getRGB(0, 0, source.getWidth(), source.getHeight(), sArray,0,1);
-		int[] pixelColor = new int[numBands];
 
-		for (int i = 0; i < sourcePixels.length; i++) {
-			switch (i % numBands) {
-			case 0:
-				pixelColor[0] = sourcePixels[i];
-				break;
-			case 1:
-				pixelColor[1] = sourcePixels[i];
-				break;
-			case 2:
-				pixelColor[2] = sourcePixels[i];
-				int value = ((255 & 0xFF) << 24) | // alpha 
-						(((int)	pixelColor[0] & 0xFF) << 16) | // red 
-						(((int) pixelColor[1] & 0xFF) << 8) | // green 
-						(((int) pixelColor[2] & 0xFF) << 0); // blue
-				dest.setRGB(x + sourcePixels.length % source.getWidth(),
-						y + (int) (sourcePixels.length / source.getHeight()), 0x00000000);
-
-				// System.out.println(pixelColor[0]);
-				// System.out.println("i got here");
-				break;
-			}
-		}
+		// MultiThreader object = new MultiThreader(sourceRaster, x, y, dest, 0);
+		// object.start();
 
 
 		long endTime = System.nanoTime();
@@ -99,22 +70,19 @@ public class util { // entirely utility class, for small universal methods that 
 		// dest.getHeight(gameGame.mainGame),
 		// BufferedImage.TYPE_INT_RGB);
 
-		//dest.setData(destRaster);
-		int[] bruh = new int[5000];
-		for (int i = 0; i < bruh.length; i++) {
-			bruh[i] = 100;
-		}
-		Graphics destGraphics = dest.getGraphics();
-		destGraphics.setColor(Color.red);
-		dest.setRGB(0, 0, 100, 50, bruh, 0, 2);
-		dest.setRGB(30, 30, 0x00000000);
-
-		dest.setData(sourceRaster);
-
-		// destGraphics.fillRect(0, 0, 500, 500);
+		dest.setData(destRaster);
 
 		return dest;
+	}
 
+	public static double betterSign(double a) {
+		if (a >= 1.0) {
+			return 1.0;
+		} else if (a <= -1.0) {
+			return -1.0;
+		} else {
+			return a;
+		}
 	}
 
 }

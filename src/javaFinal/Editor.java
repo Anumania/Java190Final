@@ -100,7 +100,7 @@ public class Editor extends gameObject {
 						finalOut += (char) j;
 					}
 				} 
-				System.out.println(objList[i].x + " " + objList[i].y);
+				System.out.println(objList[i].getName());
 				finalOut += (char) (int) (Math.floor(objList[i].x / 256.0));
 				finalOut += (char) (int) (objList[i].x % 256.0);
 				finalOut += (char) (int) (Math.floor(objList[i].y / 256.0));

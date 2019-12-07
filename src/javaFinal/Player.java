@@ -50,22 +50,18 @@ public class Player extends gameObject {
 	
 	public void step() {
 
-		if (keyListen.getKey(KeyEvent.VK_LEFT)) {
+		if (keyListen.getKeyPressed(KeyEvent.VK_LEFT)) {
 			direction = 270.0;
 		}
-		if (keyListen.getKey(KeyEvent.VK_RIGHT)) {
+		if (keyListen.getKeyPressed(KeyEvent.VK_RIGHT)) {
 			direction = 90.0;
 		}
-		if (keyListen.getKey(KeyEvent.VK_DOWN)) {
+		if (keyListen.getKeyPressed(KeyEvent.VK_DOWN)) {
 			direction = 180.0;
 		}
-		if (keyListen.getKey(KeyEvent.VK_UP)) {
-			if (direction == 270.0) {
-				direction = 360.0;
-			} 
-			else {
+		if (keyListen.getKeyPressed(KeyEvent.VK_UP)) {
 				direction = 0.0;
-			}
+
 		}
 		if (keyListen.getKeyPressed(KeyEvent.VK_F1)) {
 
@@ -88,7 +84,10 @@ public class Player extends gameObject {
 			timeSinceAction = 0;
 			scale += 3;
 		}
-
+		if (keyListen.getKeyPressed(KeyEvent.VK_F5)) {
+			gameGame.resetStep();
+			new BeatMapMaker();
+		}
 		angle += util.betterAngle(direction, angle) * 30.0;
 		angle %= 360;
 		if (angle < 0.0) {
@@ -97,11 +96,15 @@ public class Player extends gameObject {
 		
 		scale -= 0.1;
 		scale = util.clamp(scale, 1.0, 1.5);
-		if (main.timeInFrames % 15 == 3) {
-			new Arrow((int) (Math.random() * 4), 5.0);
-
+		if (main.timeInFrames % gameGame.timeBetweenArrows == 3) {
+			int result = (int) (Math.random() * 11);
+			if (result < 9) {
+				new Arrow((int) (Math.random() * 4), 5.0);
+			}
+			if (result == 10) {
+				new BounceArrow((int) (Math.random() * 4), 5.0);
+			}
 		}
-
 	}
 
 	public void paint(Graphics2D g2d, BufferedImage imageLayer) {

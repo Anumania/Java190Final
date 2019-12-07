@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Arrow extends gameObject {
+public class BounceArrow extends gameObject {
 	private double scale = 1;
 	int direction = 0;
 	public static final int UP = 0;
@@ -17,15 +17,19 @@ public class Arrow extends gameObject {
 	public static final int DOWN = 2;
 	public static final int LEFT = 3;
 	public int speed = 1;
+	private boolean bounced = false;
+	private boolean bouncing = false;
+	private double yspd;
+	private double xspd;
 
-	public Arrow(int _direction) { // up = 0, right = 1, down = 2, left = 3; (these are where the arrow comes from)
+	public BounceArrow(int _direction) { // up = 0, right = 1, down = 2, left = 3; (these are where the arrow comes from)
 		super();
 		direction = _direction;
 		create();
 		
 	}
 
-	public Arrow(int _direction, double _speed) { // up = 0, right = 1, down = 2, left = 3; (these are where the arrow
+	public BounceArrow(int _direction, double _speed) { // up = 0, right = 1, down = 2, left = 3; (these are where the arrow
 													// comes from)
 		super();
 		direction = _direction;
@@ -33,7 +37,7 @@ public class Arrow extends gameObject {
 		create();
 	}
 
-	public Arrow(int _x, int _y) { // dont use this one :)
+	public BounceArrow(int _x, int _y) { // dont use this one :)
 		super(_x, _y);
 		create();
 	}
@@ -42,7 +46,7 @@ public class Arrow extends gameObject {
 		xsize = 32;
 		ysize = 32;
 		try {
-			objectImage = ImageIO.read(new File("./sprites/Arrow.png"));
+			objectImage = ImageIO.read(new File("./sprites/BounceArrow.png"));
 		} catch (IOException e) {
 			System.out.println("read of arrow.png failed, try harder next time");
 			e.printStackTrace();
@@ -74,47 +78,65 @@ public class Arrow extends gameObject {
 	}
 	
 	public void step() {
+		if (bounced && bouncing) {
+			xspd = nextMove(xspd);
+			yspd = nextMove(yspd);
 
+			System.out.println(xspd + " " + yspd);
+			if (yspd == 0 && xspd == 0) {
+				alive = true;
+				bouncing = false;
+			}
+		}
 		if (alive) {
 			if (gameObject.checkCollision(this, Player.me.x + Player.me.xsize / 2, Player.me.y + Player.me.ysize / 2)) {
 				if (Player.timeSinceAction < 8) {
 					// System.out.println((int) Player.me.direction + " " + direction * 90);
 					if (((int) Player.me.direction) == direction * 90) {
-					alive = false;
+						Player.timeSinceAction = 100;
+						if (bounced != true) {
+							startBounce(24);
+						}
+						else {
+							alive = false;
+						}
 					}
 				}
 			}
 		switch (direction) {
 		case 0:
-			y += speed;
+				y += speed - yspd;
 			break;
-		case 1:
-			x -= speed;
+			case 1:
+				x -= speed + xspd;
 			break;
 		case 2:
-			y -= speed;
+				y -= speed + yspd;
 			break;
 		case 3:
-			x += speed;
+				x += speed - xspd;
 			break;
 			}
-		} else {
+		}
+
+		if (!alive && !bouncing && bounced) {
 			scale += 0.1;
 			if (scale > 3) {
 				gameGame.kill(this);
 			}
-			if (x < 0 || x > main.xDimension) {
-				gameGame.kill(this);
-			}
-			if (y < 0 || y > main.yDimension) {
-				gameGame.kill(this);
-			}
+		}
+		if (x < 0 || x > main.xDimension) {
+			gameGame.kill(this);
+		}
+		if (y < 0 || y > main.yDimension) {
+			gameGame.kill(this);
+		}
 
 		}
-	}
 	
+
 	public String getName() {
-		return "Arrow";
+		return "BounceArrow";
 	}
 	
 	public void paint(Graphics2D g2d, BufferedImage imageLayer) {
@@ -233,6 +255,34 @@ public class Arrow extends gameObject {
 		imageRaster.setPixels(0, 0, image.getWidth(), image.getHeight(), dArray);
 		return image;
 
+	}
+
+	public void startBounce(int bounceSpeed) {
+		switch (direction) {
+		case 0:
+			yspd += bounceSpeed;
+			break;
+		case 1:
+			xspd -= bounceSpeed;
+			break;
+		case 2:
+			yspd -= bounceSpeed;
+			break;
+		case 3:
+			xspd += bounceSpeed;
+			break;
+		}
+		bounced = true;
+		bouncing = true;
+	}
+
+	public double nextMove(double a) {
+		double val = util.betterSign(a);
+		if (Math.abs(val) < 0.03) {
+			return 0;
+		}
+		return a + (-util.betterSign(a));
+		// xspd += (-util.betterSign(xspd) / 10);
 	}
 
 }

@@ -41,12 +41,16 @@ public class gameGame extends JFrame implements ActionListener {
 	boolean speedTest = false;
 	int FPS; // usually finals are all caps, but FPS is usually like this
 	int timeInFrames;
+	static int timeBetweenArrows = 40;
 	
 	
 
 
 	// keyStep keyInput = new keyStep();
 	public static void main(String[] args) {
+		if (args.length > 0) {
+		timeBetweenArrows = Integer.parseInt(args[0]);
+		}
 
 		new gameGame();
 
@@ -233,7 +237,7 @@ public class gameGame extends JFrame implements ActionListener {
 	}
 
 	public static void resetStep() {
-		System.out.println("i got here");
+		System.out.println("everything has been reset");
 		stepList = new gameObject[20000];
 		stepListLength = 0;
 
