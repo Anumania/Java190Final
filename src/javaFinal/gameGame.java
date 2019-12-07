@@ -40,12 +40,13 @@ public class gameGame extends JFrame implements ActionListener {
 	gameObject bronky;
 	gameObject testobj;
 	boolean debug = false;
-	boolean speedTest = false;
+	boolean speedTest = true;
 	int FPS; // usually finals are all caps, but FPS is usually like this
 	int timeInFrames;
-	static int BPM = 60;
-	// static int timeBetweenArrows = 100 / (BPM / 60); //
-	static int timeBetweenArrows = 60;
+	static int BPM = 120;
+	static int timeBetweenArrows = 60 / (BPM / 60); //
+	//static int timeBetweenArrows = 60;
+	//static int timeBetweenArrows = 60;
 	static Instant lastTime = Instant.now();
 
 	// 60/(bpm/60);
@@ -56,7 +57,8 @@ public class gameGame extends JFrame implements ActionListener {
 	// keyStep keyInput = new keyStep();
 	public static void main(String[] args) {
 		if (args.length > 0) {
-		timeBetweenArrows = Integer.parseInt(args[0]);
+		BPM = Integer.parseInt(args[0]);
+		timeBetweenArrows = 60 / (BPM / 60);
 		}
 
 		new gameGame();
@@ -180,9 +182,14 @@ public class gameGame extends JFrame implements ActionListener {
 		// lastTime-Instant.now();
 		// Instant.now().un
 		// long howLong = lastTime.until(Instant.now(), ChronoUnit.MILLIS);
-		long howLong = lastTime.until(Instant.now().plus((long) 1 / 60, ChronoUnit.MILLIS), ChronoUnit.MILLIS);
+		long howLong = Instant.now().until(lastTime.plus((long)(1000.0f/60.0f),ChronoUnit.MILLIS), ChronoUnit.MILLIS);
+		//System.out.println(Instant.now());
+		//System.out.println(lastTime);
 		howLong = Math.max(howLong, 0);
+		//System.out.println(howLong);
+		//System.out.println(lastTime.until(Instant.now(), ChronoUnit.MILLIS));
 		try {
+			//Thread.sleep(5000);
 			Thread.sleep(howLong);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
