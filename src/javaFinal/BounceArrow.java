@@ -91,7 +91,6 @@ public class BounceArrow extends gameObject {
 			xspd = nextMove(xspd);
 			yspd = nextMove(yspd);
 
-			System.out.println(xspd + " " + yspd);
 			if (yspd == 0 && xspd == 0) {
 				alive = true;
 				bouncing = false;

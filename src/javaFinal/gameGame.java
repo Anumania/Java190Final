@@ -35,8 +35,8 @@ public class gameGame extends JFrame implements ActionListener {
 	static gameObject stepList[] = new gameObject[20000]; // use this like depth yeah?
 	static int stepListLength = 0;
 	static gameGame mainGame; 
-	static int camX;
-	static int camY;
+	static int camX = 0;
+	static int camY = 0;
 	gameObject bronky;
 	gameObject testobj;
 	boolean debug = false;

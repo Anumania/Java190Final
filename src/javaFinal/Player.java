@@ -156,7 +156,7 @@ public class Player extends gameObject {
 	}
 	public static void increaseCombo() {
 		combo++;
-		ComboCounter.scale = 2.5;
+		ComboCounter.scale = 1.7;
 	}
 
 }

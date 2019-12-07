@@ -2,6 +2,8 @@ package javaFinal;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
@@ -42,15 +44,14 @@ public class ComboCounter extends gameObject {
 		}
 	}
 	public void step() {
-		scale -= 0.1;
-		scale = util.clamp(scale, 1.0, 1.5);
+		scale -= 0.03;
+		scale = util.clamp(scale, 1.0, 1.7);
 	}
 	public String getName() {
 		return "Combo";	
 	}
-	public void paint(Graphics2D g2d) {
-
-
+	public void paint(Graphics2D g2d,BufferedImage lol) {
+		
 	}
 	public void paintGUI(Graphics2D g2d) {
 		
@@ -74,16 +75,26 @@ public class ComboCounter extends gameObject {
 			//System.out.println(comboArray[i]);
 			comboGraphics.drawImage(comboImages[comboArray[i]],32*i, 0, main);
 		}
-		
+		int comboLength = (Integer.toString(_combo)).length();
 		AffineTransform a = new AffineTransform();
+		//a.translate(-comboImage.getWidth(),(-comboImage.getHeight()));
+		a.shear(scale, scale);
 		
-		a.translate(x + xsize / 2, y + ysize / 2);
-		a.scale(scale, scale);
+		//a.scale(scale, scale);
+		//g2d.setTransform(a);
+		if(keyListen.getKey(KeyEvent.VK_L)) {
 		g2d.setTransform(a);
-		g2d.drawImage(comboImage,x,y,main);
+		}
+		//g2d.drawImage(comboImage,x,y,main);
+		int scaledx = (int) (x - (comboImage.getHeight()*(scale)));
+		int scaledy = (int) y;
+		int scaledWidth = (int) ((comboImage.getWidth()*(scale)));
+		int scaledHeight = (int) ((comboImage.getHeight()*(scale)));
+		System.out.println(scaledx+ " " + scaledy+ " " +scaledWidth+ " " +scaledHeight+ " ");
+		g2d.drawImage(comboImage,scaledx,scaledy,scaledWidth,scaledHeight,main);
 		g2d.setTransform(new AffineTransform());
 		//System.out.println(x + " " + y);
-		//System.out.println(_combo);
+	System.out.println(_combo);
 	}
 	
 }
