@@ -98,10 +98,10 @@ public class Player extends gameObject {
 		scale = util.clamp(scale, 1.0, 1.5);
 		if (main.timeInFrames % gameGame.timeBetweenArrows == 3) {
 			int result = (int) (Math.random() * 11);
-			if (result < 9) {
+			if (result < 12) {
 				new Arrow((int) (Math.random() * 4), 5.0);
 			}
-			if (result == 10) {
+			if (result == 20) {
 				new BounceArrow((int) (Math.random() * 4), 5.0);
 			}
 		}

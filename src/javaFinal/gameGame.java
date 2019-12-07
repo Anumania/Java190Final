@@ -11,6 +11,8 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -30,7 +32,7 @@ public class gameGame extends JFrame implements ActionListener {
 	int xDimension = 800;
 	int yDimension = 600;
 	static keyStep keyListen; //all of these statics can and should be accessed by objects in order for the game to work correctly
-	static gameObject stepList[] = new gameObject[20000]; //use this like depth yeah?
+	static gameObject stepList[] = new gameObject[20000]; // use this like depth yeah?
 	static int stepListLength = 0;
 	static gameGame mainGame; 
 	static int camX;
@@ -41,7 +43,12 @@ public class gameGame extends JFrame implements ActionListener {
 	boolean speedTest = false;
 	int FPS; // usually finals are all caps, but FPS is usually like this
 	int timeInFrames;
-	static int timeBetweenArrows = 40;
+	static int BPM = 60;
+	// static int timeBetweenArrows = 100 / (BPM / 60); //
+	static int timeBetweenArrows = 60;
+	static Instant lastTime = Instant.now();
+
+	// 60/(bpm/60);
 	
 	
 
@@ -80,8 +87,9 @@ public class gameGame extends JFrame implements ActionListener {
 			}
 		});
 		new Player();
-		timer = new Timer(wait, this); // this is what requires the need to implement actionlistener
+		timer = new Timer(16, this); // this is what requires the need to implement actionlistener
 		timer.start();
+
 
 	}
 
@@ -164,6 +172,27 @@ public class gameGame extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) { // this runs when timer is done
+
+		// while (lastTime.plus((long) 0.160,
+		// ChronoUnit.MILLIS).isBefore(Instant.now())) {
+
+		// }
+		// lastTime-Instant.now();
+		// Instant.now().un
+		// long howLong = lastTime.until(Instant.now(), ChronoUnit.MILLIS);
+		long howLong = lastTime.until(Instant.now().plus((long) 1 / 60, ChronoUnit.MILLIS), ChronoUnit.MILLIS);
+		howLong = Math.max(howLong, 0);
+		try {
+			Thread.sleep(howLong);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		lastTime = Instant.now();
+		// System.out.println(Instant.now().compareTo(lastTime));
+		// lastTime = Instant.now();
+		// System.out.println(Instant.now().getNano());
 		timeInFrames++;
 		keyListen.frameCount();
 		double i = arg0.getWhen() - prevTime;
@@ -192,7 +221,7 @@ public class gameGame extends JFrame implements ActionListener {
 			timer.setDelay(0);
 		}
 		else { 
-			timer.setDelay(16);
+
 		}
 		
 
