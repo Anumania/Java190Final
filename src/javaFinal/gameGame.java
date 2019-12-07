@@ -43,7 +43,7 @@ public class gameGame extends JFrame implements ActionListener {
 	boolean speedTest = true;
 	int FPS; // usually finals are all caps, but FPS is usually like this
 	int timeInFrames;
-	static int BPM = 120;
+	static int BPM = 300;
 	static int timeBetweenArrows = 60 / (BPM / 60); //
 	//static int timeBetweenArrows = 60;
 	//static int timeBetweenArrows = 60;
@@ -96,6 +96,7 @@ public class gameGame extends JFrame implements ActionListener {
 	}
 
 	public void step() { 
+		timeBetweenArrows = 60 / (BPM / 60);
 		if(debug) {
 			for(int i = 0; i < stepList.length;i++) {	
 				if(stepList[i] != null) {
@@ -125,6 +126,7 @@ public class gameGame extends JFrame implements ActionListener {
 				}
 			}
 		}
+		
 	}
 
 

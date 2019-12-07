@@ -19,6 +19,7 @@ public class Overseer extends gameObject {
 	
 
 	public void step() {
+		System.out.println("test");
 		if (keyListen.getKeyPressed(192)) {
 			console = util.toggle(console);
 			keyListen.resetKeyboardString(); // dont even need to reset on true, will work either way

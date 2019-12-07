@@ -21,6 +21,8 @@ public class BounceArrow extends gameObject {
 	private boolean bouncing = false;
 	private double yspd;
 	private double xspd;
+	private boolean failed;
+	private int angle;
 
 	public BounceArrow(int _direction) { // up = 0, right = 1, down = 2, left = 3; (these are where the arrow comes from)
 		super();
@@ -75,9 +77,15 @@ public class BounceArrow extends gameObject {
 			break;
 
 		}
+		angle = direction * 90;
 	}
 	
 	public void step() {
+		if(failed) {
+			angle+=10;
+			alive = false;
+			bounced = true;
+		}
 		if (bounced && bouncing) {
 			xspd = nextMove(xspd);
 			yspd = nextMove(yspd);
@@ -106,15 +114,19 @@ public class BounceArrow extends gameObject {
 		switch (direction) {
 		case 0:
 				y += speed - yspd;
+				if(y > Player.me.y +50) failed = true;
 			break;
 			case 1:
 				x -= speed + xspd;
+				if(x < Player.me.x -50) failed = true;
 			break;
 		case 2:
 				y -= speed + yspd;
+				if(y < Player.me.y -50) failed = true;
 			break;
 		case 3:
 				x += speed - xspd;
+				if(x > Player.me.x +50) failed = true;
 			break;
 			}
 		}
@@ -143,7 +155,7 @@ public class BounceArrow extends gameObject {
 
 		AffineTransform a = new AffineTransform();
 		a.translate(x + xsize / 2, y + ysize / 2);
-		a.rotate(Math.toRadians((90 * direction) + 180)); // S2: rotate around anchor
+		a.rotate(Math.toRadians((angle) + 180)); // S2: rotate around anchor
 		a.translate(-(x + xsize / 2), -(y + ysize / 2));
 		a.translate(x + xsize / 2.0, y + ysize / 4.0);
 		a.scale(scale, scale);

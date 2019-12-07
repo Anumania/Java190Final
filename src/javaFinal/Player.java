@@ -1,5 +1,6 @@
 package javaFinal;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
@@ -17,6 +18,7 @@ public class Player extends gameObject {
 	static int timeSinceAction = 0;
 	static Player me; // this is to allow for other objects to interact with player without foreaching
 						// through the entire steplist
+	private boolean changeBPM = false;
 
 	public Player() {
 		super();
@@ -78,6 +80,16 @@ public class Player extends gameObject {
 				e.printStackTrace();
 			}
 		}
+		if(keyListen.getKeyPressed(KeyEvent.VK_F12)) {
+			if(!changeBPM) {
+				keyListen.resetKeyboardString();
+				changeBPM = true;
+			}
+			else {
+				main.BPM = Integer.parseInt(keyListen.keyboard_string);
+				changeBPM = false;
+			}
+		}
 		timeSinceAction++;
 		if (keyListen.getKeyPressed(KeyEvent.VK_Z)) {
 			// TODO add the actual game part
@@ -98,10 +110,10 @@ public class Player extends gameObject {
 		scale = util.clamp(scale, 1.0, 1.5);
 		if (main.timeInFrames % gameGame.timeBetweenArrows == 3) {
 			int result = (int) (Math.random() * 11);
-			if (result < 12) {
+			if (result < 9) {
 				new Arrow((int) (Math.random() * 4), 5.0);
 			}
-			if (result == 20) {
+			if (result == 10) {
 				new BounceArrow((int) (Math.random() * 4), 5.0);
 			}
 		}
@@ -134,6 +146,11 @@ public class Player extends gameObject {
 		// AffineTransform testy = new AffineTransform();
 		//g2d.drawRect(x, y, xsize, ysize);
 
+	}
+	public void paintGUI(Graphics2D g2d) {
+		g2d.setColor(Color.BLACK);
+		g2d.drawString(main.FPS+"", 60, 60);
+		g2d.drawString(main.BPM + "", 30, 60);
 	}
 
 }
