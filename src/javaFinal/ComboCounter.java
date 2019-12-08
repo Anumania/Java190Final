@@ -90,11 +90,10 @@ public class ComboCounter extends gameObject {
 		int scaledy = (int) y;
 		int scaledWidth = (int) ((comboImage.getWidth()*(scale)));
 		int scaledHeight = (int) ((comboImage.getHeight()*(scale)));
-		System.out.println(scaledx+ " " + scaledy+ " " +scaledWidth+ " " +scaledHeight+ " ");
+		//System.out.println(scaledx+ " " + scaledy+ " " +scaledWidth+ " " +scaledHeight+ " ");
 		g2d.drawImage(comboImage,scaledx,scaledy,scaledWidth,scaledHeight,main);
 		g2d.setTransform(new AffineTransform());
 		//System.out.println(x + " " + y);
-	System.out.println(_combo);
 	}
 	
 }

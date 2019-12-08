@@ -115,7 +115,7 @@ public class Player extends gameObject {
 			if (result < 9) {
 				new Arrow((int) (Math.random() * 4), 5.0);
 			}
-			if (result == 10) {
+			if (result == 11) {
 				new BounceArrow((int) (Math.random() * 4), 5.0);
 			}
 		}

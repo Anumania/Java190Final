@@ -139,10 +139,11 @@ public class gameGame extends JFrame implements ActionListener {
 		BufferedImage imageLayer = new BufferedImage(main.xDimension, main.yDimension, BufferedImage.TYPE_INT_ARGB);
 		
 		Graphics2D g2d = (Graphics2D) offGraphics; // draw everything onto a seperate canvas
-		// g2d.setColor(Color.blue);
+		g2d.setColor(new Color(0, 0, 0, Math.max((Player.combo/2)-100,0)));
 		// g2d.setComposite(AlphaComposite.Clear);
-		// g2d.fillRect(0, 0, xDimension, yDimension); // wipe the previous screen
-		g2d.setBackground(new Color(255, 0, 0, 100));
+		g2d.fillRect(0, 0, xDimension, yDimension); // wipe the previous screen
+	
+		//g2d.setBackground();
 		if (stepListLength != 0) {
 			for (int i = 0; i < stepListLength; i++) {
 				if(stepList[i] != null) {
