@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
-public class Overseer extends gameObject {
+public class Overseer extends GameObject {
 	boolean console;
 	public Overseer() {
 		super();
@@ -21,7 +21,7 @@ public class Overseer extends gameObject {
 	public void step() {
 		System.out.println("test");
 		if (keyListen.getKeyPressed(192)) {
-			console = util.toggle(console);
+			console = Util.toggle(console);
 			keyListen.resetKeyboardString(); // dont even need to reset on true, will work either way
 			System.out.println("console is " + (console ? "on" : "off")); // ternary operator, super advanced cool
 																			// stuff, absolutely radical

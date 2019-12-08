@@ -18,10 +18,10 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-public class gameGame extends JFrame implements ActionListener {
+public class GameGame extends JFrame implements ActionListener {
 	double prevTime = 0;
-	int bruh = 0;
-	double skruh = 0;
+	int fpsInProgress = 0;
+	double timeUntilNextFPS = 0;
 	double x;
 	double y;
 	double jumpVel = 0;
@@ -31,14 +31,12 @@ public class gameGame extends JFrame implements ActionListener {
 	Image offImage;
 	int xDimension = 800;
 	int yDimension = 600;
-	static keyStep keyListen; //all of these statics can and should be accessed by objects in order for the game to work correctly
-	static gameObject stepList[] = new gameObject[20000]; // use this like depth yeah?
+	static KeyStep keyListen; //all of these statics can and should be accessed by objects in order for the game to work correctly
+	static GameObject stepList[] = new GameObject[20000]; // use this like depth yeah?
 	static int stepListLength = 0;
-	static gameGame mainGame; 
+	static GameGame mainGame; 
 	static int camX = 0;
 	static int camY = 0;
-	gameObject bronky;
-	gameObject testobj;
 	boolean debug = false;
 	boolean speedTest = true;
 	int FPS; // usually finals are all caps, but FPS is usually like this
@@ -61,11 +59,11 @@ public class gameGame extends JFrame implements ActionListener {
 		timeBetweenArrows = 60 / (BPM / 60);
 		}
 
-		new gameGame();
+		new GameGame();
 
 	}
 
-	public gameGame() {
+	public GameGame() {
 		super("test game"); // this is the game title also this has to be first
 		mainGame = this;
 		
@@ -74,7 +72,7 @@ public class gameGame extends JFrame implements ActionListener {
 		x = 0.0;
 		wait = 10;
 
-		keyListen = new keyStep(this);
+		keyListen = new KeyStep(this);
 
 		setSize(xDimension, yDimension); // this is the window size
 
@@ -133,7 +131,7 @@ public class gameGame extends JFrame implements ActionListener {
 	public void paint(Graphics g) { // the graphics object originates here, cant make your own, also this is called
 		
 		// automagically :)
-		gameGame main = gameGame.mainGame;
+		GameGame main = GameGame.mainGame;
 		offImage = createImage(xDimension, yDimension);
 		offGraphics = offImage.getGraphics();
 		BufferedImage imageLayer = new BufferedImage(main.xDimension, main.yDimension, BufferedImage.TYPE_INT_ARGB);
@@ -147,10 +145,10 @@ public class gameGame extends JFrame implements ActionListener {
 		if (stepListLength != 0) {
 			for (int i = 0; i < stepListLength; i++) {
 				if(stepList[i] != null) {
-				stepList[i].x-= gameGame.camX; stepList[i].y-= gameGame.camY; //camera movement
+				stepList[i].x-= GameGame.camX; stepList[i].y-= GameGame.camY; //camera movement
 				// TODO dont draw things outside of the screen border
 				stepList[i].paint(g2d, imageLayer);
-				stepList[i].x+= gameGame.camX; stepList[i].y+= gameGame.camY;
+				stepList[i].x+= GameGame.camX; stepList[i].y+= GameGame.camY;
 				}
 			}
 		}
@@ -207,14 +205,15 @@ public class gameGame extends JFrame implements ActionListener {
 		keyListen.frameCount();
 		double i = arg0.getWhen() - prevTime;
 		prevTime = arg0.getWhen();
-		skruh += i;
+		timeUntilNextFPS += i;
 
-		bruh++;
-		if (skruh >= 1000) {
-			System.out.println("fps: " + bruh);
-			FPS = bruh;
-			bruh = 0;
-			skruh = 0;
+		fpsInProgress++;
+		if (timeUntilNextFPS >= 1000) {
+			System.out.println("fps: " + fpsInProgress);
+			FPS = fpsInProgress;
+			fpsInProgress = 0;
+			timeUntilNextFPS = 0;
+
 			
 		}
 		// keyListen.
@@ -237,12 +236,12 @@ public class gameGame extends JFrame implements ActionListener {
 
 	}
 
-	public int steps(gameObject l) {
+	public int steps(GameObject l) {
 		stepList[stepListLength] = l;
 		stepListLength++;
 		return stepListLength;
 	}
-	public void steps(gameObject l,int k) {
+	public void steps(GameObject l,int k) {
 		if(stepList[k] != null) {
 			System.out.println("created " + l.getName());
 		}
@@ -250,7 +249,7 @@ public class gameGame extends JFrame implements ActionListener {
 		stepListLength++;
 
 	}
-	public void changeDepth(gameObject l, int k) {
+	public void changeDepth(GameObject l, int k) {
 		for(int i = 0;i != stepList.length;i++) {
 			if(stepList[i].equals(l)) {
 				stepList[i] = null;
@@ -277,12 +276,12 @@ public class gameGame extends JFrame implements ActionListener {
 
 	public static void resetStep() {
 		System.out.println("everything has been reset");
-		stepList = new gameObject[20000];
+		stepList = new GameObject[20000];
 		stepListLength = 0;
 
 	}
 
-	public static void kill(gameObject object) {
+	public static void kill(GameObject object) {
 		// System.out.println(stepList[1244]);
 		stepList[object.stepNum - 1] = null;
 	}

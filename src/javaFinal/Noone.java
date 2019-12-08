@@ -2,7 +2,7 @@ package javaFinal;
 
 import java.awt.Graphics2D;
 
-public class Noone extends gameObject {
+public class Noone extends GameObject {
 	public Noone() {
 
 	}

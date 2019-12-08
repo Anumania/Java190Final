@@ -3,7 +3,7 @@ package javaFinal;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 
-public class util { // entirely utility class, for small universal methods that probably are already
+public class Util { // entirely utility class, for small universal methods that probably are already
 					// in a java library somewhere but i know how to make
 	public static boolean toggle(boolean in) {
 		if (in) {
@@ -49,7 +49,7 @@ public class util { // entirely utility class, for small universal methods that 
 	 */
 	public static BufferedImage drawToImageCorrectly(int x, int y, BufferedImage source, BufferedImage dest) {
 		long startTime = System.nanoTime();
-		gameGame main = gameGame.mainGame;
+		GameGame main = GameGame.mainGame;
 		WritableRaster destRaster = dest.getRaster();
 		// System.out.println(destRaster);
 		WritableRaster sourceRaster = source.getRaster();

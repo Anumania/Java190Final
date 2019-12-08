@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class BounceArrow extends gameObject {
+public class BounceArrow extends GameObject {
 	private double scale = 1;
 	int direction = 0;
 	public static final int UP = 0;
@@ -97,7 +97,7 @@ public class BounceArrow extends gameObject {
 			}
 		}
 		if (alive) {
-			if (gameObject.checkCollision(this, Player.me.x + Player.me.xsize / 2, Player.me.y + Player.me.ysize / 2)) {
+			if (GameObject.checkCollision(this, Player.me.x + Player.me.xsize / 2, Player.me.y + Player.me.ysize / 2)) {
 				if (Player.timeSinceAction < 8) {
 					// System.out.println((int) Player.me.direction + " " + direction * 90);
 					if (((int) Player.me.direction) == direction * 90) {
@@ -136,14 +136,14 @@ public class BounceArrow extends gameObject {
 		if (!alive && !bouncing && bounced) {
 			scale += 0.1;
 			if (scale > 3) {
-				gameGame.kill(this);
+				GameGame.kill(this);
 			}
 		}
 		if (x < 0 || x > main.xDimension) {
-			gameGame.kill(this);
+			GameGame.kill(this);
 		}
 		if (y < 0 || y > main.yDimension) {
-			gameGame.kill(this);
+			GameGame.kill(this);
 		}
 
 		}
@@ -291,11 +291,11 @@ public class BounceArrow extends gameObject {
 	}
 
 	public double nextMove(double a) {
-		double val = util.betterSign(a);
+		double val = Util.betterSign(a);
 		if (Math.abs(val) < 0.03) {
 			return 0;
 		}
-		return a + (-util.betterSign(a));
+		return a + (-Util.betterSign(a));
 		// xspd += (-util.betterSign(xspd) / 10);
 	}
 

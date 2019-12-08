@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
-public class BeatMapMaker extends gameObject {
+public class BeatMapMaker extends GameObject {
 	public BeatMapMaker() {
 		super();
 	}
@@ -17,10 +17,10 @@ public class BeatMapMaker extends gameObject {
 	}
 	public void step() {
 		if (keyListen.getKeyPressed(KeyEvent.VK_F2)) {
-			Editor.writeMapFile(gameGame.stepList);
+			Editor.writeMapFile(GameGame.stepList);
 		}
 		if (keyListen.getKeyPressed(KeyEvent.VK_F1)) {
-			gameGame.kill(this);
+			GameGame.kill(this);
 
 		}
 	}

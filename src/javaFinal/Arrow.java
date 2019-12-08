@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Arrow extends gameObject {
+public class Arrow extends GameObject {
 	private double scale = 1;
 	int direction = 0;
 	public static final int UP = 0;
@@ -84,7 +84,7 @@ public class Arrow extends gameObject {
 			Player.combo = 0;
 		}
 		if (alive) {
-			if (gameObject.checkCollision(this, Player.me.x + Player.me.xsize / 2, Player.me.y + Player.me.ysize / 2)) {
+			if (GameObject.checkCollision(this, Player.me.x + Player.me.xsize / 2, Player.me.y + Player.me.ysize / 2)) {
 				if (Player.timeSinceAction < 8) {
 					// System.out.println((int) Player.me.direction + " " + direction * 90);
 					if (((int) Player.me.direction) == direction * 90) {
@@ -114,13 +114,13 @@ public class Arrow extends gameObject {
 		} else {
 			scale += 0.1;
 			if (scale > 3) {
-				gameGame.kill(this);
+				GameGame.kill(this);
 			}
 			if (x < 0 || x > main.xDimension) {
-				gameGame.kill(this);
+				GameGame.kill(this);
 			}
 			if (y < 0 || y > main.yDimension) {
-				gameGame.kill(this);
+				GameGame.kill(this);
 			}
 
 		}

@@ -7,7 +7,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 
-public class keyStep extends JFrame implements ActionListener {
+public class KeyStep extends JFrame implements ActionListener {
 	int keys;
 	boolean[] keyArray = new boolean[200];
 	boolean[] lastFrame = new boolean[200];
@@ -16,7 +16,7 @@ public class keyStep extends JFrame implements ActionListener {
 									// this exact term, this is not a mistake.
 	
 
-	public keyStep(gameGame gamer) {// im a goddamn wizard i guessed how this worked and i was r i g h t.
+	public KeyStep(GameGame gamer) {// im a goddamn wizard i guessed how this worked and i was r i g h t.
 
 		KeyListener listener = new KeyListener() {
 

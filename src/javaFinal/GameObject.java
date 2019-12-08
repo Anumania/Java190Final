@@ -9,9 +9,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class gameObject {
-	gameGame main;
-	keyStep keyListen;
+public class GameObject {
+	GameGame main;
+	KeyStep keyListen;
 	int x;
 	int y;
 	int ysize;
@@ -20,7 +20,7 @@ public class gameObject {
 	BufferedImage objectImage;
 	int stepNum;
 
-	public gameObject() {
+	public GameObject() {
 		x = 200;
 		y = 200;
 		try {
@@ -30,8 +30,8 @@ public class gameObject {
 			e.printStackTrace();
 		}
 		xsize = 20;
-		keyListen = gameGame.keyListen;
-		main = gameGame.mainGame;
+		keyListen = GameGame.keyListen;
+		main = GameGame.mainGame;
 		stepNum = main.steps(this); // place this object into the steps list, which is a list of every object in the
 									// game
 		alive = true;
@@ -40,7 +40,7 @@ public class gameObject {
 
 	}
 
-	public gameObject(int _x, int _y) {// this is to allow gameObjects to be initialized at a certain place, the create
+	public GameObject(int _x, int _y) {// this is to allow gameObjects to be initialized at a certain place, the create
 										// method is mainly supposed to be overridden, allowing gameObjects to
 										// initialize variables inside an "event" rather than in their constructors,
 										// which they have 2 of
@@ -48,8 +48,8 @@ public class gameObject {
 		y = _y;
 		ysize = 20;
 		xsize = 20;
-		keyListen = gameGame.keyListen;
-		main = gameGame.mainGame;
+		keyListen = GameGame.keyListen;
+		main = GameGame.mainGame;
 		main.steps(this); //place this object into the steps list, which is a list of every object in the game
 		alive = true;
 		// question: if i run super on a child, what will happen on this next line? even
@@ -101,7 +101,7 @@ public class gameObject {
 		
 	}
 	
-	public static boolean checkCollision(gameObject obj1, gameObject obj2) {// check if object2 and object1 collide at
+	public static boolean checkCollision(GameObject obj1, GameObject obj2) {// check if object2 and object1 collide at
 		boolean xCol = false;																	// any point.
 		boolean yCol = false;
 
@@ -119,7 +119,7 @@ public class gameObject {
 		return false;
 	}
 
-	public static boolean checkCollision(gameObject obj, int targx, int targy) { // check if you want a specific point
+	public static boolean checkCollision(GameObject obj, int targx, int targy) { // check if you want a specific point
 																					// if collisioned
 		boolean xCol = false;																	
 		boolean yCol = false;

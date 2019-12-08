@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Player extends gameObject {
+public class Player extends GameObject {
 	BufferedImage sprite;
 	double angle = 0;
 	double direction = 0;
@@ -72,7 +72,7 @@ public class Player extends gameObject {
 			new Overseer(20, 20);
 		}
 		if (keyListen.getKeyPressed(KeyEvent.VK_F2)) {
-			Editor.writeMapFile(gameGame.stepList);
+			Editor.writeMapFile(GameGame.stepList);
 		}
 		if (keyListen.getKeyPressed(KeyEvent.VK_F3)) {
 			try {
@@ -99,18 +99,18 @@ public class Player extends gameObject {
 			scale += 3;
 		}
 		if (keyListen.getKeyPressed(KeyEvent.VK_F5)) {
-			gameGame.resetStep();
+			GameGame.resetStep();
 			new BeatMapMaker();
 		}
-		angle += util.betterAngle(direction, angle) * 30.0;
+		angle += Util.betterAngle(direction, angle) * 30.0;
 		angle %= 360;
 		if (angle < 0.0) {
 			angle += 360;
 		}
 		
 		scale -= 0.1;
-		scale = util.clamp(scale, 1.0, 1.5);
-		if (main.timeInFrames % gameGame.timeBetweenArrows == 3) {
+		scale = Util.clamp(scale, 1.0, 1.5);
+		if (main.timeInFrames % GameGame.timeBetweenArrows == 3) {
 			int result = (int) (Math.random() * 11);
 			if (result < 9) {
 				new Arrow((int) (Math.random() * 4), 5.0);

@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class ComboCounter extends gameObject {
+public class ComboCounter extends GameObject {
 	BufferedImage[] comboImages = new BufferedImage[10];
 	static double scale = 1;
 	public ComboCounter() {
@@ -45,7 +45,7 @@ public class ComboCounter extends gameObject {
 	}
 	public void step() {
 		scale -= 0.03;
-		scale = util.clamp(scale, 1.0, 1.7);
+		scale = Util.clamp(scale, 1.0, 1.7);
 	}
 	public String getName() {
 		return "Combo";	

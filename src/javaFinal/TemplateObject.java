@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class TemplateObject extends gameObject {
+public class TemplateObject extends GameObject {
 	public TemplateObject() {
 		super();
 	}

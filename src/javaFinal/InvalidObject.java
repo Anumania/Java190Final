@@ -3,7 +3,7 @@ package javaFinal;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class InvalidObject extends gameObject {
+public class InvalidObject extends GameObject {
 	public InvalidObject() {
 		super();
 	}

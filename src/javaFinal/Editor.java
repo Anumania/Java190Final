@@ -8,10 +8,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-public class Editor extends gameObject {
+public class Editor extends GameObject {
 	// new types should always be added at the end of this list, to not break
 	// previous maps, as the maploader loads the objects by their index here.
-	public final static Class gameObjectReference[] = { InvalidObject.class, gameObject.class, Overseer.class,
+	public final static Class gameObjectReference[] = { InvalidObject.class, GameObject.class, Overseer.class,
 			Player.class,
 			TemplateObject.class, Collision.class };
 
@@ -48,7 +48,7 @@ public class Editor extends gameObject {
 
 	static int index; // for nextChar
 	public static void readMapFile(File a) throws IOException {
-		gameGame.resetStep();
+		GameGame.resetStep();
 		index = 0;
 		InputStream fileIn = new FileInputStream(a);
 		int objType;
@@ -78,7 +78,7 @@ public class Editor extends gameObject {
 
 	}
 
-	public static void writeMapFile(gameObject[] objList) {
+	public static void writeMapFile(GameObject[] objList) {
 		File outFile = new File("./maps/map1.map");
 		FileWriter fWriter = null;
 		PrintWriter pWriter;
