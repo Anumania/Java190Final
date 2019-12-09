@@ -17,6 +17,8 @@ public class Player extends GameObject {
 	double scale = 1;
 	static int timeSinceAction = 0;
 	static int combo;
+	static int score = 0;
+	boolean hardmode = false;
 	static Player me; // this is to allow for other objects to interact with player without foreaching
 						// through the entire steplist
 	private boolean changeBPM = false;
@@ -56,15 +58,31 @@ public class Player extends GameObject {
 
 		if (keyListen.getKeyPressed(KeyEvent.VK_LEFT)) {
 			direction = 270.0;
+			if (hardmode) {
+				timeSinceAction = 0;
+				scale += 3;
+			}
 		}
 		if (keyListen.getKeyPressed(KeyEvent.VK_RIGHT)) {
 			direction = 90.0;
+			if (hardmode) {
+				timeSinceAction = 0;
+				scale += 3;
+			}
 		}
 		if (keyListen.getKeyPressed(KeyEvent.VK_DOWN)) {
 			direction = 180.0;
+			if (hardmode) {
+				timeSinceAction = 0;
+				scale += 3;
+			}
 		}
 		if (keyListen.getKeyPressed(KeyEvent.VK_UP)) {
 				direction = 0.0;
+			if (hardmode) {
+				timeSinceAction = 0;
+				scale += 3;
+			}
 
 		}
 		if (keyListen.getKeyPressed(KeyEvent.VK_F1)) {
@@ -95,12 +113,15 @@ public class Player extends GameObject {
 		timeSinceAction++;
 		if (keyListen.getKeyPressed(KeyEvent.VK_Z)) {
 			// TODO add the actual game part
+			if (!hardmode) {
 			timeSinceAction = 0;
 			scale += 3;
+			}
 		}
 		if (keyListen.getKeyPressed(KeyEvent.VK_F5)) {
-			GameGame.resetStep();
-			new BeatMapMaker();
+			/*
+			 * GameGame.resetStep(); new BeatMapMaker();
+			 */
 		}
 		angle += Util.betterAngle(direction, angle) * 30.0;
 		angle %= 360;
@@ -153,10 +174,15 @@ public class Player extends GameObject {
 		g2d.setColor(Color.BLACK);
 		g2d.drawString(main.FPS+"", 60, 60);
 		g2d.drawString(main.BPM + "", 30, 60);
+
+		// g2d.setFont(Font.);
+		g2d.drawString(score + "", 600, 500);
 	}
-	public static void increaseCombo() {
+
+	public static void increaseCombo(int precision) {
 		combo++;
 		ComboCounter.scale = 1.7;
+		score += precision;
 	}
 
 }

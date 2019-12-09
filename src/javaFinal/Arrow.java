@@ -22,6 +22,7 @@ public class Arrow extends GameObject {
 	public int speed = 1;
 	private boolean failed = false;
 	private int angle;
+	private int score = 600;
 
 	public Arrow(int _direction) { // up = 0, right = 1, down = 2, left = 3; (these are where the arrow comes from)
 		super();
@@ -88,11 +89,12 @@ public class Arrow extends GameObject {
 		}
 		if (alive) {
 			if (GameObject.checkCollision(this, Player.me.x + Player.me.xsize / 2, Player.me.y + Player.me.ysize / 2)) {
+				score -= 100;
 				if (Player.timeSinceAction < 8) {
 					// System.out.println((int) Player.me.direction + " " + direction * 90);
 					if (((int) Player.me.direction) == direction * 90) {
 					alive = false;
-					Player.increaseCombo();
+						Player.increaseCombo(score);
 					}
 				}
 			}

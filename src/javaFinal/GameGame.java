@@ -57,10 +57,13 @@ public class GameGame extends JFrame implements ActionListener {
 	
 
 
-	/*
+	/**
 	 * a friend requested that i add the ability to change the BPM, and i tried to
 	 * find a way to do it ingame and gave up, so if you give a number for a launch
 	 * option, it takes it as a speed
+	 * 
+	 * @param args command line arguments, the first argument will be taken as game
+	 *             speeds
 	 */
 	public static void main(String[] args) {
 		if (args.length > 0) {
@@ -72,7 +75,7 @@ public class GameGame extends JFrame implements ActionListener {
 
 	}
 
-	/*
+	/**
 	 * The constructor passes the name of the game up to JFrame, and initializes
 	 * everything that must work prior to the first frame
 	 */
@@ -106,7 +109,7 @@ public class GameGame extends JFrame implements ActionListener {
 
 	}
 
-	/*
+	/**
 	 * this system is highly inspired by another game engine that i work with, each
 	 * game object has a method called: step, create, paint, and paintGUI. At the
 	 * moment, each game object is placed on a massive array, and each frame, the
@@ -134,15 +137,15 @@ public class GameGame extends JFrame implements ActionListener {
 		
 	}
 
-	/*
+	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see java.awt.Window#paint(java.awt.Graphics) my paint and Jframe paint work
-	 * identically, especially in GameObjects, this works like step but g2d is
-	 * passed to each object to draw onto, along with another layer for other
-	 * reasons. Also, every object, before they draw, have their x and y positions
-	 * shifted relative to the camera, this is in order to give the illusion of
-	 * camera movement.
+	 *      identically, especially in GameObjects, this works like step but g2d is
+	 *      passed to each object to draw onto, along with another layer for other
+	 *      reasons. Also, every object, before they draw, have their x and y
+	 *      positions shifted relative to the camera, this is in order to give the
+	 *      illusion of camera movement.
 	 */
 	public void paint(Graphics g) { // the graphics object originates here, cant make your own, also this is called
 		
@@ -191,16 +194,15 @@ public class GameGame extends JFrame implements ActionListener {
 	}
 
 	@Override
-	/*
+	/**
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 * actionPerformed is from Timer, which i only barely use. I could go without
-	 * this, but it could break something to remove right now
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 *      actionPerformed is from Timer, which i only barely use. I could go
+	 *      without this, but it could break something to remove right now
 	 * 
-	 * Timing is done at ~6 lines down from here instead of using the setTimer
-	 * method because its too imprecise.
+	 *      Timing is done at ~6 lines down from here instead of using the setTimer
+	 *      method because its too imprecise.
 	 */
 	public void actionPerformed(ActionEvent arg0) { // this runs when timer is done
 
@@ -261,12 +263,15 @@ public class GameGame extends JFrame implements ActionListener {
 
 	}
 
-	/*
+	/**
 	 * despite this incredibly poorly worded method looking simmilar to @see #step ,
 	 * its job is to add whatever object is in the parameter to the stepList, which
 	 * is then used by this class to run each event
 	 * 
 	 * @param object GameObject to add to the stepList
+	 * @return the index that the object was placed, this is remembered by all
+	 *         GameObjects so that they can use it to remove themselves from the
+	 *         stepist.
 	 */
 	public int steps(GameObject object) {
 		stepList[stepListLength] = object;
@@ -274,7 +279,7 @@ public class GameGame extends JFrame implements ActionListener {
 		return stepListLength;
 	}
 
-	/*
+	/**
 	 * this method seems cool, being able to choose what order things are drawn in
 	 * is definitely something important, but because of how the system works right
 	 * now, it does not work correctly
@@ -292,8 +297,11 @@ public class GameGame extends JFrame implements ActionListener {
 
 	}
 
-	/*
+	/**
 	 * same as @see #steps(GameObject,int), doesnt work for the same reason
+	 * 
+	 * @param l object to change depth of
+	 * @param k index to change the depth to
 	 */
 	public void changeDepth(GameObject l, int k) {
 		for(int i = 0;i != stepList.length;i++) {
@@ -305,7 +313,7 @@ public class GameGame extends JFrame implements ActionListener {
 		
 	}
 
-	/*
+	/**
 	 * i had an idea where i would make image "packs", but i see no advantage to
 	 * that, so this sits here until i do see a reason to make an image pack
 	 */
@@ -324,7 +332,7 @@ public class GameGame extends JFrame implements ActionListener {
 		 */
 	}
 
-	/*
+	/**
 	 * reset the stepList, no objects, completely empty
 	 */
 	public static void resetStep() {
@@ -334,8 +342,10 @@ public class GameGame extends JFrame implements ActionListener {
 
 	}
 
-	/*
+	/**
 	 * removes the reference to the specified object from the stepList
+	 * 
+	 * @param object to remove from steplist
 	 */
 	public static void kill(GameObject object) {
 		// System.out.println(stepList[1244]);
