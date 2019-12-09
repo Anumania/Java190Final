@@ -9,6 +9,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/*
+ * the primary enemy of this game, decided not to make this a superclass for some reason
+ */
 public class Arrow extends GameObject {
 	private double scale = 1;
 	int direction = 0;

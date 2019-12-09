@@ -3,6 +3,10 @@ package javaFinal;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+/*
+ * this is spawned when the game incorrectly loads a map, does nothing but is a big red box to show that something messed up
+ * @see javaFinal.GameObject for information on all of these methods
+ */
 public class InvalidObject extends GameObject {
 	public InvalidObject() {
 		super();

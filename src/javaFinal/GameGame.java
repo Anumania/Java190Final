@@ -18,6 +18,13 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
+/**
+ * 
+ * @author Jonah Cathcart
+ * 
+ *         GameGame is the absolute beginning, this is where all magic happens,
+ *         everything outside of GameGame interacts with it in some way
+ */
 public class GameGame extends JFrame implements ActionListener {
 	double prevTime = 0;
 	int fpsInProgress = 0;
@@ -43,8 +50,6 @@ public class GameGame extends JFrame implements ActionListener {
 	int timeInFrames;
 	static int BPM = 300;
 	static int timeBetweenArrows = 60 / (BPM / 60); //
-	//static int timeBetweenArrows = 60;
-	//static int timeBetweenArrows = 60;
 	static Instant lastTime = Instant.now();
 
 	// 60/(bpm/60);
@@ -52,7 +57,11 @@ public class GameGame extends JFrame implements ActionListener {
 	
 
 
-	// keyStep keyInput = new keyStep();
+	/*
+	 * a friend requested that i add the ability to change the BPM, and i tried to
+	 * find a way to do it ingame and gave up, so if you give a number for a launch
+	 * option, it takes it as a speed
+	 */
 	public static void main(String[] args) {
 		if (args.length > 0) {
 		BPM = Integer.parseInt(args[0]);
@@ -63,6 +72,10 @@ public class GameGame extends JFrame implements ActionListener {
 
 	}
 
+	/*
+	 * The constructor passes the name of the game up to JFrame, and initializes
+	 * everything that must work prior to the first frame
+	 */
 	public GameGame() {
 		super("test game"); // this is the game title also this has to be first
 		mainGame = this;
@@ -93,6 +106,12 @@ public class GameGame extends JFrame implements ActionListener {
 
 	}
 
+	/*
+	 * this system is highly inspired by another game engine that i work with, each
+	 * game object has a method called: step, create, paint, and paintGUI. At the
+	 * moment, each game object is placed on a massive array, and each frame, the
+	 * array is looped through and it runs the step method on every object
+	 */
 	public void step() { 
 		timeBetweenArrows = 60 / (BPM / 60);
 		if(debug) {
@@ -104,19 +123,7 @@ public class GameGame extends JFrame implements ActionListener {
 			System.out.println();
 		}
 			
-//		if (keyListen.getKey(KeyEvent.VK_A)) {
 //			camX-=5;
-//		}
-//		if (keyListen.getKey(KeyEvent.VK_D)) {
-//			camX+=5;
-//		}
-//		if (keyListen.getKey(KeyEvent.VK_S)) {
-//			camY+=5;
-//		}
-//		if (keyListen.getKey(KeyEvent.VK_W)) {
-//			camY-=5;
-//		}
-		
 		if (stepListLength != 0) {
 			for (int i = 0; i < stepListLength; i++) {
 				if (stepList[i] != null) {
@@ -127,7 +134,16 @@ public class GameGame extends JFrame implements ActionListener {
 		
 	}
 
-
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.awt.Window#paint(java.awt.Graphics) my paint and Jframe paint work
+	 * identically, especially in GameObjects, this works like step but g2d is
+	 * passed to each object to draw onto, along with another layer for other
+	 * reasons. Also, every object, before they draw, have their x and y positions
+	 * shifted relative to the camera, this is in order to give the illusion of
+	 * camera movement.
+	 */
 	public void paint(Graphics g) { // the graphics object originates here, cant make your own, also this is called
 		
 		// automagically :)
@@ -152,7 +168,8 @@ public class GameGame extends JFrame implements ActionListener {
 				}
 			}
 		}
-		
+		// paintGUI does not take camera movement into account and also draws ontop of
+		// paint elements
 		if (stepListLength != 0) {
 			for (int i = 0; i < stepListLength; i++) { //camera movement
 				{
@@ -174,6 +191,17 @@ public class GameGame extends JFrame implements ActionListener {
 	}
 
 	@Override
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 * actionPerformed is from Timer, which i only barely use. I could go without
+	 * this, but it could break something to remove right now
+	 * 
+	 * Timing is done at ~6 lines down from here instead of using the setTimer
+	 * method because its too imprecise.
+	 */
 	public void actionPerformed(ActionEvent arg0) { // this runs when timer is done
 
 		// while (lastTime.plus((long) 0.160,
@@ -183,15 +211,17 @@ public class GameGame extends JFrame implements ActionListener {
 		// lastTime-Instant.now();
 		// Instant.now().un
 		// long howLong = lastTime.until(Instant.now(), ChronoUnit.MILLIS);
-		long howLong = Instant.now().until(lastTime.plus((long)(1000.0f/60.0f),ChronoUnit.MILLIS), ChronoUnit.MILLIS);
+		// this finds out how long until the next frame should play
+		long howLong = Instant.now().until(lastTime.plus((long) (1000.0f / 60.0f), ChronoUnit.MILLIS),
+				ChronoUnit.MILLIS);
 		//System.out.println(Instant.now());
 		//System.out.println(lastTime);
-		howLong = Math.max(howLong, 0);
+		howLong = Math.max(howLong, 0); // makes sure its not negative
 		//System.out.println(howLong);
 		//System.out.println(lastTime.until(Instant.now(), ChronoUnit.MILLIS));
 		try {
 			//Thread.sleep(5000);
-			Thread.sleep(howLong);
+			Thread.sleep(howLong); // waits for however long
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -216,31 +246,43 @@ public class GameGame extends JFrame implements ActionListener {
 
 			
 		}
-		// keyListen.
+		// calling the step and paint methods, which in turn call every other object's
+		// step and paint methods
 		step();
-		repaint(); // if you do not allow the frame to finish rendering, you will get artifacts, we
-		// use something called double buffering
-		// to fix these artifacts, by drawing to an entirely different canvas, and
-		// drawing the canvas for the previous frame
-		// this forces the computer to draw a frame that is complete instead of a
-		// possibly incomplete one.
+		repaint();
 
 		 // this is roughly 60 fps
 		if(speedTest) {
-			timer.setDelay(0);
+			timer.setDelay(0); // this used to read 16, but that would cause the game to run at 63 fps, and 17
+								// would cause 57 fps.
 		}
-		else { 
 
-		}
 		
 
 	}
 
-	public int steps(GameObject l) {
-		stepList[stepListLength] = l;
+	/*
+	 * despite this incredibly poorly worded method looking simmilar to @see #step ,
+	 * its job is to add whatever object is in the parameter to the stepList, which
+	 * is then used by this class to run each event
+	 * 
+	 * @param object GameObject to add to the stepList
+	 */
+	public int steps(GameObject object) {
+		stepList[stepListLength] = object;
 		stepListLength++;
 		return stepListLength;
 	}
+
+	/*
+	 * this method seems cool, being able to choose what order things are drawn in
+	 * is definitely something important, but because of how the system works right
+	 * now, it does not work correctly
+	 * 
+	 * @param l DONT USE
+	 * 
+	 * @param k THIS METHOD
+	 */
 	public void steps(GameObject l,int k) {
 		if(stepList[k] != null) {
 			System.out.println("created " + l.getName());
@@ -249,6 +291,10 @@ public class GameGame extends JFrame implements ActionListener {
 		stepListLength++;
 
 	}
+
+	/*
+	 * same as @see #steps(GameObject,int), doesnt work for the same reason
+	 */
 	public void changeDepth(GameObject l, int k) {
 		for(int i = 0;i != stepList.length;i++) {
 			if(stepList[i].equals(l)) {
@@ -259,6 +305,10 @@ public class GameGame extends JFrame implements ActionListener {
 		
 	}
 
+	/*
+	 * i had an idea where i would make image "packs", but i see no advantage to
+	 * that, so this sits here until i do see a reason to make an image pack
+	 */
 	public void importFiles() {
 		BufferedImage test;
 		File rootName = new File("./sprites.jpg");
@@ -274,6 +324,9 @@ public class GameGame extends JFrame implements ActionListener {
 		 */
 	}
 
+	/*
+	 * reset the stepList, no objects, completely empty
+	 */
 	public static void resetStep() {
 		System.out.println("everything has been reset");
 		stepList = new GameObject[20000];
@@ -281,6 +334,9 @@ public class GameGame extends JFrame implements ActionListener {
 
 	}
 
+	/*
+	 * removes the reference to the specified object from the stepList
+	 */
 	public static void kill(GameObject object) {
 		// System.out.println(stepList[1244]);
 		stepList[object.stepNum - 1] = null;

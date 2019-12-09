@@ -3,8 +3,19 @@ package javaFinal;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 
+/*
+ * utility class, these methods can be used anywhere, and i deemed their home that of no class, and thus, they were placed in the misc class
+ * very surprised that Util isnt a keyword
+ */
 public class Util { // entirely utility class, for small universal methods that probably are already
 					// in a java library somewhere but i know how to make
+	/*
+	 * Toggles the input boolean
+	 * 
+	 * @param in boolean to toggle
+	 * 
+	 * @return toggled boolean
+	 */
 	public static boolean toggle(boolean in) {
 		if (in) {
 			return false;
@@ -12,6 +23,16 @@ public class Util { // entirely utility class, for small universal methods that 
 		return true;
 	}
 
+	/*
+	 * has no use outside of calculating the player and its rotation, plans to make
+	 * this universally useful.
+	 * 
+	 * @param a target angle
+	 * 
+	 * @param b current angle
+	 * 
+	 * @return which direction to start turning
+	 */
 	public static double betterAngle(double a, double b) {
 		if (a == 270.0 && b < 90.0) {
 			return -1.0;
@@ -24,7 +45,8 @@ public class Util { // entirely utility class, for small universal methods that 
 	}
 
 	/*
-	 * "clamps" a value between 2 other values
+	 * "clamps" a value between 2 other values, returning a number between the 2,
+	 * not by interpolation, but in the same way max and min work
 	 * 
 	 * @param value the value you want to clamp
 	 * 
@@ -42,11 +64,23 @@ public class Util { // entirely utility class, for small universal methods that 
 	}
 
 	/*
-	 * makes a color transparent in an image, and returns an image with
-	 * transparentcy over the color.
+	 * A dumpster fire, i made this in my rampage to fix transparency and its not
+	 * used to my knowledege
 	 * 
 	 * @return transparent image
+	 * 
+	 * @param x x position of image
+	 * 
+	 * @param y y position of image
+	 * 
+	 * @param source image to draw onto the destination image
+	 * 
+	 * @param dest the destination image which will be drawn on
+	 * 
+	 * @return destination image which has been drawn on, which is useless because
+	 * it modifies the object and doesnt make a copy
 	 */
+	@Deprecated
 	public static BufferedImage drawToImageCorrectly(int x, int y, BufferedImage source, BufferedImage dest) {
 		long startTime = System.nanoTime();
 		GameGame main = GameGame.mainGame;
@@ -74,8 +108,18 @@ public class Util { // entirely utility class, for small universal methods that 
 
 		return dest;
 	}
+	/*
+	 * just like @see java.lang.Math #signum, but if the number is below 1 on either
+	 * side of 0, it returns that instead of 1, this is useful for making object
+	 * movements based off sign
+	 * 
+	 * @param a number to better sign
+	 * 
+	 * @returns -1,1, or anything inbetween
+	 */
 
 	public static double betterSign(double a) {
+		Math.signum(a);
 		if (a >= 1.0) {
 			return 1.0;
 		} else if (a <= -1.0) {

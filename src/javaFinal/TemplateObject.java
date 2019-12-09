@@ -7,11 +7,20 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/*
+ * template object to copy for new objects
+ */
 public class TemplateObject extends GameObject {
+	/*
+	 * constructor which just runs super
+	 */
 	public TemplateObject() {
 		super();
 	}
 
+	/*
+	 * constructor
+	 */
 	public TemplateObject(int _x, int _y) {
 		super(_x, _y);
 	}
@@ -25,9 +34,22 @@ public class TemplateObject extends GameObject {
 	}
 	public void step() {
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javaFinal.GameObject#getName() deprecated in the place of a better
+	 * system,
+	 */
+	@Deprecated
 	public String getName() {
 		return "TemplateObject";	
 	}
+
+	/*
+	 * @see javaFinal.GameObject#paint()
+	 * 
+	 */
 	public void paint(Graphics2D g2d) {
 
 		g2d.setColor(Color.BLUE);
