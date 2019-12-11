@@ -44,20 +44,35 @@ public class Util { // entirely utility class, for small universal methods that 
 		}
 	}
 
-	/*
+	/**
 	 * "clamps" a value between 2 other values, returning a number between the 2,
 	 * not by interpolation, but in the same way max and min work
 	 * 
 	 * @param value the value you want to clamp
 	 * 
-	 * @param max the maximum value you want to return
+	 * @param max   the maximum value you want to return
 	 * 
-	 * @param min the minimum value you want to return
+	 * @param min   the minimum value you want to return
 	 * 
 	 * @return The input clamped
 	 */
 	public static double clamp(double value, double min, double max) {
 		double answer;
+		answer = Math.max(value, min);
+		answer = Math.min(answer, max);
+		return answer;
+	}
+
+	/**
+	 * int version of double clamp
+	 * 
+	 * @param value value to clamp
+	 * @param min   minimum value to clamp to
+	 * @param max   max value to clamp to
+	 * @return value clamped between 2 parameters
+	 */
+	public static int clamp(int value, int min, int max) {
+		int answer;
 		answer = Math.max(value, min);
 		answer = Math.min(answer, max);
 		return answer;

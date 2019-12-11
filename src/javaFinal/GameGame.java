@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -116,6 +117,12 @@ public class GameGame extends JFrame implements ActionListener {
 	 * array is looped through and it runs the step method on every object
 	 */
 	public void step() { 
+		if (keyListen.getKey(KeyEvent.VK_RIGHT)) {
+			camX++;
+		}
+		if (keyListen.getKey(KeyEvent.VK_LEFT)) {
+			camX--;
+		}
 		timeBetweenArrows = 60 / (BPM / 60);
 		if(debug) {
 			for(int i = 0; i < stepList.length;i++) {	
@@ -156,7 +163,7 @@ public class GameGame extends JFrame implements ActionListener {
 		BufferedImage imageLayer = new BufferedImage(main.xDimension, main.yDimension, BufferedImage.TYPE_INT_ARGB);
 		
 		Graphics2D g2d = (Graphics2D) offGraphics; // draw everything onto a seperate canvas
-		g2d.setColor(new Color(0, 0, 0, Math.max((Player.combo/2)-100,0)));
+		g2d.setColor(new Color(0, 0, 0, Util.clamp(Player.combo * 10, 0, 255)));
 		// g2d.setComposite(AlphaComposite.Clear);
 		g2d.fillRect(0, 0, xDimension, yDimension); // wipe the previous screen
 	

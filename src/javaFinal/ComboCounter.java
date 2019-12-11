@@ -1,9 +1,6 @@
 package javaFinal;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
@@ -82,9 +79,6 @@ public class ComboCounter extends GameObject {
 		
 		//a.scale(scale, scale);
 		//g2d.setTransform(a);
-		if(keyListen.getKey(KeyEvent.VK_L)) {
-		g2d.setTransform(a);
-		}
 		//g2d.drawImage(comboImage,x,y,main);
 		int scaledx = (int) (x - (comboImage.getHeight()*(scale)));
 		int scaledy = (int) y;

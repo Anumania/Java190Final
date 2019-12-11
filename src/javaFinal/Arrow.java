@@ -86,6 +86,7 @@ public class Arrow extends GameObject {
 			angle+=10;
 			alive = false;
 			Player.combo = 0;
+			Player.comboMult = 1.0;
 		}
 		if (alive) {
 			if (GameObject.checkCollision(this, Player.me.x + Player.me.xsize / 2, Player.me.y + Player.me.ysize / 2)) {
