@@ -19,6 +19,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 /**
+ * @author jonah cathcart
+ * 
  * the main class, this runs everything, and also turns itself into a jframe, i should have split this up into 2 seperate classes, since in the future, it will be hard to navigate.\
  * a lot of this is duct taped together, and should be reworked in the future.
  * 
@@ -148,7 +150,7 @@ public class GameGame extends JFrame implements ActionListener {
 		BufferedImage imageLayer = new BufferedImage(main.xDimension, main.yDimension, BufferedImage.TYPE_INT_ARGB);
 		
 		Graphics2D g2d = (Graphics2D) offGraphics; // draw everything onto a seperate canvas
-		g2d.setColor(new Color(0, 0, 0, Util.clamp(Player.combo * 10, 0, 255)));
+		g2d.setColor(new Color(0, 0, 0, Util.clamp(Player.combo/10, 0, 255)));
 		// g2d.setComposite(AlphaComposite.Clear);
 		g2d.fillRect(0, 0, xDimension, yDimension); // wipe the previous screen
 	

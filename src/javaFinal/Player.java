@@ -208,14 +208,14 @@ public class Player extends GameObject {
 	}
 	/**
 	 * when the combo is increased, so is the multiplier, and the comboCounter also does a bit of a hop to indicate the combo increasing
+	 * @param precision how good did you hit? max 500 min 100
 	 */
-	public static void increaseCombo() {
+	public static void increaseCombo(double precision) {
 		combo++;
 		ComboCounter.scale = 1.7;
 		score += (precision * comboMult);
 		comboMult *= 1.03;
 	}
-
 	public static double removeFloatingPointError(double a) {
 		a *= 10000;
 		a = Math.ceil(a);

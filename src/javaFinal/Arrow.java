@@ -24,6 +24,7 @@ public class Arrow extends GameObject {
 	public int speed = 1;
 	private boolean failed = false;
 	private int angle;
+	private double score;
 	/**
 	 * direction of incoming arrow specified by the constants {@link #UP} {@link #DOWN} {@link #LEFT} {@link #RIGHT}
 	 * @param _direction lol
