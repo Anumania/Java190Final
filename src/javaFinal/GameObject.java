@@ -1,6 +1,7 @@
 package javaFinal;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -30,8 +31,16 @@ public class GameObject {
 		try {
 			objectImage = ImageIO.read(new File("./sprites/default.png"));
 		} catch (IOException e) {
-			System.out.println("read of default sprite failed, make new image called default.png please :)");
-			e.printStackTrace();
+
+			BufferedImage redX = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
+			Graphics redGraphics = redX.getGraphics();
+			redGraphics.setColor(Color.red);
+
+			redGraphics.drawLine(0, 0, 32, 32);
+			redGraphics.drawLine(32, 0, 0, 32);
+
+			objectImage = redX;
+			// e.printStackTrace();
 		}
 		xsize = 20;
 		keyListen = GameGame.keyListen;

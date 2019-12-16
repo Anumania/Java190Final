@@ -21,6 +21,9 @@ public class Player extends GameObject {
 	double scale = 1;
 	static int timeSinceAction = 0;
 	static int combo;
+	static double comboMult = 1.0;
+	static int score = 0;
+	boolean hardmode = false;
 	static Player me; // this is to allow for other objects to interact with player without foreaching
 						// through the entire steplist
 	private boolean changeBPM = false;
@@ -67,18 +70,37 @@ public class Player extends GameObject {
 	 * handles all input for the player with some extra inputs in there for debugging.
 	 */
 	public void step() {
+		if (score == Integer.MAX_VALUE) {
+			System.exit(69);
+		}
 
-		if (keyListen.getKeyPressed(KeyEvent.VK_LEFT)) {
+		if (keyListen.getKeyPressed(KeyEvent.VK_J)) {
 			direction = 270.0;
+			if (hardmode) {
+				timeSinceAction = 0;
+				scale += 3;
+			}
 		}
-		if (keyListen.getKeyPressed(KeyEvent.VK_RIGHT)) {
+		if (keyListen.getKeyPressed(KeyEvent.VK_L)) {
 			direction = 90.0;
+			if (hardmode) {
+				timeSinceAction = 0;
+				scale += 3;
+			}
 		}
-		if (keyListen.getKeyPressed(KeyEvent.VK_DOWN)) {
+		if (keyListen.getKeyPressed(KeyEvent.VK_K)) {
 			direction = 180.0;
+			if (hardmode) {
+				timeSinceAction = 0;
+				scale += 3;
+			}
 		}
-		if (keyListen.getKeyPressed(KeyEvent.VK_UP)) {
+		if (keyListen.getKeyPressed(KeyEvent.VK_I)) {
 				direction = 0.0;
+			if (hardmode) {
+				timeSinceAction = 0;
+				scale += 3;
+			}
 
 		}
 		if (keyListen.getKeyPressed(KeyEvent.VK_F1)) {
@@ -107,14 +129,17 @@ public class Player extends GameObject {
 			}
 		}
 		timeSinceAction++;
-		if (keyListen.getKeyPressed(KeyEvent.VK_Z)) {
+		if (keyListen.getKeyPressed(KeyEvent.VK_Z) || keyListen.getKeyPressed(KeyEvent.VK_SPACE)) {
 			// TODO add the actual game part
+			if (!hardmode) {
 			timeSinceAction = 0;
 			scale += 3;
+			}
 		}
 		if (keyListen.getKeyPressed(KeyEvent.VK_F5)) {
-			GameGame.resetStep();
-			new BeatMapMaker();
+			/*
+			 * GameGame.resetStep(); new BeatMapMaker();
+			 */
 		}
 		angle += Util.betterAngle(direction, angle) * 30.0;
 		angle %= 360;
@@ -124,12 +149,12 @@ public class Player extends GameObject {
 		
 		scale -= 0.1;
 		scale = Util.clamp(scale, 1.0, 1.5);
-		if (main.timeInFrames % GameGame.timeBetweenArrows == 3) {
+		if (main.timeInFrames % GameGame.timeBetweenArrows == 0) {
 			int result = (int) (Math.random() * 11);
-			if (result < 9) {
+			if (result < 11) {
 				new Arrow((int) (Math.random() * 4), 5.0);
 			}
-			if (result == 11) {
+			else if (result < 11) {
 				new BounceArrow((int) (Math.random() * 4), 5.0);
 			}
 		}
@@ -172,6 +197,14 @@ public class Player extends GameObject {
 		g2d.setColor(Color.BLACK);
 		g2d.drawString(main.FPS+"", 60, 60);
 		g2d.drawString(main.BPM + "", 30, 60);
+
+		// g2d.setFont(Font.);
+		g2d.drawString(score + "", 600, 500);
+		g2d.drawString(removeFloatingPointError(comboMult) + "x", 600, 530);
+		g2d.drawString(
+				"youre " + 100 * removeFloatingPointError((double) (score) / (double) Integer.MAX_VALUE) + "% there",
+				600, 560);
+
 	}
 	/**
 	 * when the combo is increased, so is the multiplier, and the comboCounter also does a bit of a hop to indicate the combo increasing
@@ -179,6 +212,15 @@ public class Player extends GameObject {
 	public static void increaseCombo() {
 		combo++;
 		ComboCounter.scale = 1.7;
+		score += (precision * comboMult);
+		comboMult *= 1.03;
+	}
+
+	public static double removeFloatingPointError(double a) {
+		a *= 10000;
+		a = Math.ceil(a);
+		a /= 10000;
+		return a;
 	}
 
 }

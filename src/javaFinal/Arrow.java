@@ -102,14 +102,16 @@ public class Arrow extends GameObject {
 			angle+=10;
 			alive = false;
 			Player.combo = 0;
+			Player.comboMult = 1.0;
 		}
 		if (alive) {
 			if (GameObject.checkCollision(this, Player.me.x + Player.me.xsize / 2, Player.me.y + Player.me.ysize / 2)) {
+				score -= 100;
 				if (Player.timeSinceAction < 8) {
 					// System.out.println((int) Player.me.direction + " " + direction * 90);
 					if (((int) Player.me.direction) == direction * 90) {
 					alive = false;
-					Player.increaseCombo();
+						Player.increaseCombo(score);
 					}
 				}
 			}

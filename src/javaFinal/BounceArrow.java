@@ -109,7 +109,7 @@ public class BounceArrow extends GameObject {
 				if (Player.timeSinceAction < 8) {
 					// System.out.println((int) Player.me.direction + " " + direction * 90);
 					if (((int) Player.me.direction) == direction * 90) {
-						Player.increaseCombo();
+						Player.increaseCombo(500);
 						Player.timeSinceAction = 100;
 						if (bounced != true) {
 							startBounce(24);
