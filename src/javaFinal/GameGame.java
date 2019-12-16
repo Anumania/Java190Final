@@ -17,7 +17,15 @@ import java.time.temporal.ChronoUnit;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.Timer;
-
+/**
+ * the main class, this runs everything, and also turns itself into a jframe, i should have split this up into 2 seperate classes, since in the future, it will be hard to navigate.\
+ * a lot of this is duct taped together, and should be reworked in the future.
+ * 
+ * the general gist:
+ * there is an array called a steplist, this keeps references to all objects that want to be shown on screen and have logic, to delete an object, you only have to delete its reference.
+ * all objects are drawn in the steplist order, and there is a stepListLength variable to stop the game from trying to go through 20,000 indexes each frame, if it hits a null index, it isnt much of a problem however.
+ * 
+ */
 public class GameGame extends JFrame implements ActionListener {
 	double prevTime = 0;
 	int fpsInProgress = 0;
@@ -52,7 +60,10 @@ public class GameGame extends JFrame implements ActionListener {
 	
 
 
-	// keyStep keyInput = new keyStep();
+	/**
+	 * main method, if the bpm is specified as a launch argument, here it will take it
+	 * @param args launch arguments
+	 */
 	public static void main(String[] args) {
 		if (args.length > 0) {
 		BPM = Integer.parseInt(args[0]);
@@ -62,7 +73,9 @@ public class GameGame extends JFrame implements ActionListener {
 		new GameGame();
 
 	}
-
+	/**
+	 * here is where jframe is initialized and where the frame timer is set.
+	 */
 	public GameGame() {
 		super("test game"); // this is the game title also this has to be first
 		mainGame = this;
@@ -92,7 +105,9 @@ public class GameGame extends JFrame implements ActionListener {
 
 
 	}
-
+	/**
+	 * the step method runs through the stepList and runs the step method of each GameObject
+	 */
 	public void step() { 
 		timeBetweenArrows = 60 / (BPM / 60);
 		if(debug) {
@@ -127,7 +142,10 @@ public class GameGame extends JFrame implements ActionListener {
 		
 	}
 
-
+	/**
+	 * same thing as step, but the camera position is subtracted for normal draw, and not for gui draw.
+	 * @param g this is the graphics that the jframe paint method is given, whatever you draw onto it appears on the screen.
+	 */
 	public void paint(Graphics g) { // the graphics object originates here, cant make your own, also this is called
 		
 		// automagically :)
@@ -172,7 +190,10 @@ public class GameGame extends JFrame implements ActionListener {
 		// http://journals.ecs.soton.ac.uk/java/tutorial/ui/drawing/doubleBuffer.html
 		// thanks
 	}
-
+	/**
+	 * this is dangerous and also why i should have split this into 2 classes, since actionPerformed catches all actionEvents instead of just the timer like i would like it to.
+	 * this is also what happens every frame, the code about 10 lines down keeps the game running a smooth ~60 fps.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) { // this runs when timer is done
 
@@ -235,12 +256,22 @@ public class GameGame extends JFrame implements ActionListener {
 		
 
 	}
-
+	/**
+	 * this is how you add an object to the steplist, typically this is done in the constructor of the object, with steps(this).
+	 * @param l the object to add to the list
+	 * @return the length of the steplist, just in case that information is needed
+	 */
 	public int steps(GameObject l) {
 		stepList[stepListLength] = l;
 		stepListLength++;
 		return stepListLength;
 	}
+	/**
+	 * this does not work due to the nature of the stepList right now, but this could allow the objects to choose the order they are created in, and thus change the draw and logic order.
+	 * @param l object to add to stepList
+	 * @param k position to place at
+	 * @deprecated
+	 */
 	public void steps(GameObject l,int k) {
 		if(stepList[k] != null) {
 			System.out.println("created " + l.getName());
@@ -249,6 +280,12 @@ public class GameGame extends JFrame implements ActionListener {
 		stepListLength++;
 
 	}
+	/**
+	 * same thing as the one before, but this changes the depth instead of initiating at the depth
+	 * @param l object to change stepList index
+	 * @param k index to change to
+	 * @deprecated
+	 */
 	public void changeDepth(GameObject l, int k) {
 		for(int i = 0;i != stepList.length;i++) {
 			if(stepList[i].equals(l)) {

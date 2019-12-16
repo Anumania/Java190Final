@@ -3,6 +3,9 @@ package javaFinal;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 
+/*
+ * entirely utility class, some of these should probably be put into other classes, but a lot of these can be used in multiple places and i found it suitable to put them all into the same class
+ */
 public class Util { // entirely utility class, for small universal methods that probably are already
 					// in a java library somewhere but i know how to make
 	public static boolean toggle(boolean in) {

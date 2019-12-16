@@ -9,7 +9,11 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
+/**
+ * the player of the beatgame, he cant move, but is supposed to be the first object to be created so he draws first.
+ * @author jonah
+ *
+ */
 public class Player extends GameObject {
 	BufferedImage sprite;
 	double angle = 0;
@@ -20,21 +24,29 @@ public class Player extends GameObject {
 	static Player me; // this is to allow for other objects to interact with player without foreaching
 						// through the entire steplist
 	private boolean changeBPM = false;
-
+	/**
+	 * {@inheritDoc}
+	 */
 	public Player() {
 		super();
 		create();
 	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	public Player(int _x, int _y) {
 		super(_x,_y);
 		create();
 	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	public String getName() {
 		return "Player";	
 	}
-	
+	/**
+	 * places the player at the center of the screen, sets his sprite, and creates the combo counter object
+	 */
 	public void create() {
 		me = this;
 		xsize = 32;
@@ -51,7 +63,9 @@ public class Player extends GameObject {
 		new ComboCounter(550,50);
 	}
 	
-	
+	/**
+	 * handles all input for the player with some extra inputs in there for debugging.
+	 */
 	public void step() {
 
 		if (keyListen.getKeyPressed(KeyEvent.VK_LEFT)) {
@@ -120,7 +134,9 @@ public class Player extends GameObject {
 			}
 		}
 	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	public void paint(Graphics2D g2d, BufferedImage imageLayer) {
 		//g2d.setColor(Color.BLUE);
 		// source: https://stackoverflow.com/questions/8639567/java-rotating-images
@@ -149,11 +165,17 @@ public class Player extends GameObject {
 		//g2d.drawRect(x, y, xsize, ysize);
 
 	}
+	/**
+	 * {@inheritDoc}
+	 */
 	public void paintGUI(Graphics2D g2d) {
 		g2d.setColor(Color.BLACK);
 		g2d.drawString(main.FPS+"", 60, 60);
 		g2d.drawString(main.BPM + "", 30, 60);
 	}
+	/**
+	 * when the combo is increased, so is the multiplier, and the comboCounter also does a bit of a hop to indicate the combo increasing
+	 */
 	public static void increaseCombo() {
 		combo++;
 		ComboCounter.scale = 1.7;

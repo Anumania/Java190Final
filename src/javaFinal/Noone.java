@@ -1,7 +1,11 @@
 package javaFinal;
 
 import java.awt.Graphics2D;
-
+/**
+ * simmilar use to InvalidObject, but this one really does nothing, and might break something.
+ * @author jonah
+ *
+ */
 public class Noone extends GameObject {
 	public Noone() {
 

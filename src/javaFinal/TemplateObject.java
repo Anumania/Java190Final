@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
+/*
+ * this object is copied whenever one wants to make a new game object
+ */
 public class TemplateObject extends GameObject {
 	public TemplateObject() {
 		super();

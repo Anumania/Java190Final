@@ -6,7 +6,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
-
+/**
+ * this class handles all keyboard inputs and then has methods to access the information without hassle, maybe the class i am most proud of in how i structured.
+ * @author jonah
+ *
+ */
 public class KeyStep extends JFrame implements ActionListener {
 	int keys;
 	boolean[] keyArray = new boolean[200];
@@ -15,8 +19,11 @@ public class KeyStep extends JFrame implements ActionListener {
 	String keyboard_string = ""; // im really used to another programming language that looks like this for
 									// this exact term, this is not a mistake.
 	
-
-	public KeyStep(GameGame gamer) {// im a goddamn wizard i guessed how this worked and i was r i g h t.
+	/**
+	 * sets up all keyListeners to modify an array once a key is pressed.
+	 * @param gamer Main game, this is needed to attach the keyListener to some object
+	 */
+	public KeyStep(GameGame gamer) {// im a wizard i guessed how this worked and i was r i g h t.
 
 		KeyListener listener = new KeyListener() {
 
@@ -61,22 +68,35 @@ public class KeyStep extends JFrame implements ActionListener {
 		gamer.addKeyListener(listener);
 	
 	}
-
+/**
+ * this should never be called, if it does, then something is wrong
+ * @param e actionEvent
+ */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		System.out.println(
 				"keylistener called actionPerformed (this shouldnt happen(you should probably let me know how you did this))");
-
 	}
-	
+	/**
+	 * this is practically only used to debug, but this returns the whole key Array, which has values for each key on the keyboard
+	 * @return key array
+	 */
 	public int getKeys() {
 		return keys;
 	}
-
+	/**
+	 * returns weather or not a key is being pressed this frame
+	 * @param keyType use KeyEvent constants for this
+	 * @return Weather or not the key is pressed this frame
+	 */
 	public boolean getKey(int keyType) {
 		return keyArray[keyType];
 	}
-
+	/**
+	 * returns weather or not a key was pressed this frame, only returns true the very first frame a key was pressed.
+	 * @param keyType use KeyEvent constants for this
+	 * @return Weather or not the key was pressed this frame.
+	 */
 	public boolean getKeyPressed(int keyType) {
 
 		if (keyTime[keyType] == 1) {
@@ -87,7 +107,9 @@ public class KeyStep extends JFrame implements ActionListener {
 		}
 	}
 
-
+	/**
+	 * this is to insure that {@link KeyStep#getKeyPressed(int)} works correctly
+	 */
 	public void frameCount() { // this runs every frame.,.,. or should at least
 		for (int i = 0; i != keyArray.length; i++) {
 			if (keyArray[i]) {
@@ -97,12 +119,17 @@ public class KeyStep extends JFrame implements ActionListener {
 			}
 		}
 	}
-
+	/**
+	 * an extra addon, this records what the user has typed, and can be used in the place of a textbox.
+	 * @return a string with the chars the user has typed.
+	 */
 	public String getKeyboardString() { // getter and setter except you cant really set it (you can since its a public
 										// variable but i cant think of any reason to atm)
 		return keyboard_string;
 	}
-
+	/**
+	 * if you want the keyboard string to be blank
+	 */
 	public void resetKeyboardString() {
 		keyboard_string = "";
 	}

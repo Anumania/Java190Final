@@ -6,7 +6,11 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
+/**
+ * this is for the platformer i was going to make, very shortlived however.
+ * @author jonah
+ *
+ */
 public class Collision extends GameObject {
 	public Collision() {
 		super();

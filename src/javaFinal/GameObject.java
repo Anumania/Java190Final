@@ -8,7 +8,9 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
+/**
+ * superclass for all objects, has a base of everything an object needs to have, in hindsight, i probably should have made this an interface instead of a superclass, since all GameObjects need all of these
+ */
 public class GameObject {
 	GameGame main;
 	KeyStep keyListen;
@@ -19,7 +21,9 @@ public class GameObject {
 	boolean alive = false;
 	BufferedImage objectImage;
 	int stepNum;
-
+/**
+ * blank constructor, sets positions to arbitrary number, sets the sprite to a default image, sets up keylistener, and runs @see javaFinal.GameGame.steps(GameObject) in order to get them running correctly
+ */
 	public GameObject() {
 		x = 200;
 		y = 200;
@@ -40,6 +44,11 @@ public class GameObject {
 
 	}
 
+	/**
+	 * identical to the parameterless constructor, but this places the object at a specified position
+	 * @param _x x position to start object at
+	 * @param _y y position to start object at
+	 */
 	public GameObject(int _x, int _y) {// this is to allow gameObjects to be initialized at a certain place, the create
 										// method is mainly supposed to be overridden, allowing gameObjects to
 										// initialize variables inside an "event" rather than in their constructors,
@@ -57,14 +66,22 @@ public class GameObject {
 		// answer: it executes the child class create, niiice
 		// create();
 	}
-
+	/**
+	 * create step for anything that runs no matter the constructor used, this is used more in the children than in the superclass
+	 */
 	public void create() {
 		System.out.println(
 				"superclass executed create! you should override this by making a create method in your gameobject child");
 	}
+	/**
+	 * this is to get a string version of the class name, which has actually been replaced by this.getClass().getName();, which works way better, not needing someone to update the name of the object every time
+	 * @return the name of the object in a string
+	 * @deprecated
+	 */
 
 	public String getName() {
 		return "gameObject";	
+
 	}
 	
 	public void step() {

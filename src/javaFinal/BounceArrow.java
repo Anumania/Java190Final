@@ -8,7 +8,12 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
+/**
+ * i should have made arrow a parent class, but didnt, and now im stuck with a lot of duplicate code.
+ * see {@link Arrow} for comments on arrows in general, not much is different other than how they act.
+ * @author jonah
+ *
+ */
 public class BounceArrow extends GameObject {
 	private double scale = 1;
 	int direction = 0;
@@ -23,7 +28,10 @@ public class BounceArrow extends GameObject {
 	private double xspd;
 	private boolean failed;
 	private int angle;
-
+	/**
+	 *{@link Arrow#Arrow(int)}
+	 * @param _direction  {@link #UP} {@link #DOWN} {@link #LEFT} {@link #RIGHT}
+	 */
 	public BounceArrow(int _direction) { // up = 0, right = 1, down = 2, left = 3; (these are where the arrow comes from)
 		super();
 		direction = _direction;

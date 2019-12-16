@@ -11,7 +11,11 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
+/**
+ * comboCounter object, mostly controlled by {@link Player}
+ * @author jonah
+ *
+ */
 public class ComboCounter extends GameObject {
 	BufferedImage[] comboImages = new BufferedImage[10];
 	static double scale = 1;
@@ -19,11 +23,16 @@ public class ComboCounter extends GameObject {
 		super();
 		create();
 	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	public ComboCounter(int _x, int _y) {
 		super(_x, _y);
 		create();
 	}
+	/**
+	 * loads images for each sprite, did not make a sprite for number 0, so its just a dog :)
+	 */
 	public void create() {
 		try {
 			comboImages[0] = ImageIO.read(new File("./sprites/default.png"));
@@ -43,16 +52,28 @@ public class ComboCounter extends GameObject {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * {@inheritDoc}
+	 */
 	public void step() {
 		scale -= 0.03;
 		scale = Util.clamp(scale, 1.0, 1.7);
 	}
+	/**
+	 * {@inheritDoc}
+	 */
 	public String getName() {
 		return "Combo";	
 	}
+	/**
+	 * {@inheritDoc}
+	 */
 	public void paint(Graphics2D g2d,BufferedImage lol) {
 		
 	}
+	/**
+	 * {@inheritDoc}
+	 */
 	public void paintGUI(Graphics2D g2d) {
 		
 		int __combo = Player.combo;

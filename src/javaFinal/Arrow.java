@@ -9,6 +9,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/**
+ * the arrow object, the player spawns these based on the bpm
+ * @author jonah
+ *
+ */
 public class Arrow extends GameObject {
 	private double scale = 1;
 	int direction = 0;
@@ -19,14 +24,21 @@ public class Arrow extends GameObject {
 	public int speed = 1;
 	private boolean failed = false;
 	private int angle;
-
+	/**
+	 * direction of incoming arrow specified by the constants {@link #UP} {@link #DOWN} {@link #LEFT} {@link #RIGHT}
+	 * @param _direction lol
+	 */
 	public Arrow(int _direction) { // up = 0, right = 1, down = 2, left = 3; (these are where the arrow comes from)
 		super();
 		direction = _direction;
 		create();
 		
 	}
-
+	/**
+	 * same as [{@link #Arrow(int)} but also allows a speed to be specified.
+	 * @param _direction  {@link #UP} {@link #DOWN} {@link #LEFT} {@link #RIGHT}
+	 * @param _speed speed for arrow to go
+	 */
 	public Arrow(int _direction, double _speed) { // up = 0, right = 1, down = 2, left = 3; (these are where the arrow
 													// comes from)
 		super();
@@ -34,12 +46,18 @@ public class Arrow extends GameObject {
 		speed = (int) _speed;
 		create();
 	}
-
+	/**
+	 * this is here for testing, dont use this
+	 * @param _x x position to start object at
+	 * @param _y y position to start object at
+	 */
 	public Arrow(int _x, int _y) { // dont use this one :)
 		super(_x, _y);
 		create();
 	}
-	
+	/**
+	 * create step, handles direction and sprite.
+	 */
 	public void create() {
 		xsize = 32;
 		ysize = 32;
@@ -76,7 +94,9 @@ public class Arrow extends GameObject {
 		angle = direction*90;
 		//System.out.println(angle);
 	}
-	
+	/**
+	 * all arrow logic, score increase is handled here instead of at the player to prevent the player from cycling through the steplist each frame.
+	 */
 	public void step() {
 		if(failed) {
 			angle+=10;
@@ -125,11 +145,18 @@ public class Arrow extends GameObject {
 
 		}
 	}
-	
+	/**
+	 * {@inheritDoc}
+	 */
 	public String getName() {
 		return "Arrow";
 	}
-	
+	/**
+	 * this handles all cool effects that go on per arrow
+	 * 
+	 * @param g2d copy of the graphics from {@link GameGame#paint(java.awt.Graphics)}
+	 * @param imageLayer seperate image for effects
+	 */
 	public void paint(Graphics2D g2d, BufferedImage imageLayer) {
 
 		AffineTransform a = new AffineTransform();
@@ -169,7 +196,9 @@ public class Arrow extends GameObject {
 		g2d.setTransform(new AffineTransform());
 
 	}
-
+	/**
+	 * this is from a dark time where i tried to rewrite the rendering, i'm too scared to delete it, but its probably not being used
+	 */
 	public void makeImageTransparent() {
 
 		WritableRaster outRaster = null;
@@ -226,7 +255,12 @@ public class Arrow extends GameObject {
 
 		// System.out.println(array);
 	}
-
+/**
+ * same as {@link #makeImageTransparent()}
+ * @param amount amount to increase transparency on image.
+ * @param image image to make partially transparent
+ * @return partially transparent image
+ */
 	public BufferedImage makeImagePartiallyTransparent(int amount, BufferedImage image) {
 		if (amount > 255 || amount < 0) {
 			amount = 0;
