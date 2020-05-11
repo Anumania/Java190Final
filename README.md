@@ -1,1 +1,1 @@
-This is a game framework I made for a computer science final, if this is eventually cleaned up, anyone can use this code in whatever way they want, if you have any questions, discord me Anumania#6969 or twitter @Anumania1, please, im lonely.
+This is a game framework I made for a computer science final, if this is eventually cleaned up, anyone can use this code in whatever way they want.
