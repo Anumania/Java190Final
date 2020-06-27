@@ -107,7 +107,7 @@ public class Arrow extends GameObject {
 		}
 		if (alive) {
 			if (GameObject.checkCollision(this, Player.me.x + Player.me.xsize / 2, Player.me.y + Player.me.ysize / 2)) {
-				score -= 100;
+				score += 100;
 				if (Player.timeSinceAction < 8) {
 					// System.out.println((int) Player.me.direction + " " + direction * 90);
 					if (((int) Player.me.direction) == direction * 90) {
